@@ -1,0 +1,21 @@
+[
+  {
+    "id": "product_001",
+    "name": "Super Hook",
+    "description": "Strong self-adhesive utility hook for home use.",
+    "key_features": [
+      "strong grip",
+      "easy to install",
+      "no drilling",
+      "useful for home organization"
+    ],
+    "use_cases": [
+      "hanging frames",
+      "hanging decor",
+      "hanging boards",
+      "home utility use"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Smart utility for modern spaces"
+  }
+]
