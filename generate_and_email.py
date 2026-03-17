@@ -1,6 +1,8 @@
 import os
 import json
 import smtplib
+import random
+from datetime import date
 from email.message import EmailMessage
 from pathlib import Path
 
@@ -117,8 +119,64 @@ tagline = product["tagline"]
 key_features = ", ".join(product["key_features"])
 use_cases = ", ".join(product["use_cases"])
 
+THEMES = [
+    {
+        "name": "Minimalist Zen",
+        "style": "ultra-clean white space, single hero product shot, subtle shadow, sans-serif typography, monochromatic palette with one accent color",
+        "mood": "calm, premium, uncluttered",
+        "lighting": "soft diffused studio light with gentle highlights",
+        "composition": "centered product floating on white, with minimal text and lots of breathing room",
+    },
+    {
+        "name": "Futuristic Tech",
+        "style": "dark background with glowing neon outlines, holographic reflections, geometric grid lines, futuristic HUD elements",
+        "mood": "innovative, cutting-edge, high-tech",
+        "lighting": "dramatic back-lit glow with cyan/purple neon accents",
+        "composition": "product at an angle with light trails and digital data particles surrounding it",
+    },
+    {
+        "name": "Lifestyle Warmth",
+        "style": "warm earthy tones, natural textures (wood, linen, stone), cozy home setting, soft bokeh background",
+        "mood": "homey, relatable, aspirational everyday life",
+        "lighting": "warm golden-hour window light, soft shadows",
+        "composition": "product placed in a real home scene with complementary lifestyle props",
+    },
+    {
+        "name": "Bold Pop Art",
+        "style": "vivid saturated colors, halftone dot patterns, thick outlines, retro-modern comic aesthetic, strong typography",
+        "mood": "energetic, fun, eye-catching",
+        "lighting": "flat graphic look with strong shadows and highlights, no photorealism",
+        "composition": "product enlarged as the hero with graphic shapes, starbursts, and bold tagline text",
+    },
+    {
+        "name": "Nature & Sustainability",
+        "style": "lush greenery, botanical elements, organic shapes, earthy green/brown/cream palette, eco-conscious feel",
+        "mood": "fresh, natural, responsible, trustworthy",
+        "lighting": "bright natural daylight with dappled leaf shadows",
+        "composition": "product nestled among plants and natural materials, grounded and organic framing",
+    },
+    {
+        "name": "Luxury Editorial",
+        "style": "black and gold palette, marble or velvet textures, serif typography, high-fashion magazine layout",
+        "mood": "exclusive, sophisticated, aspirational",
+        "lighting": "dramatic side-lit Rembrandt lighting on a dark background",
+        "composition": "product as the centerpiece with elegant negative space, metallic accents, and refined details",
+    },
+    {
+        "name": "Urban Street",
+        "style": "gritty concrete textures, graffiti-inspired typography, raw industrial environment, bold contrasting colors",
+        "mood": "authentic, edgy, urban-cool",
+        "lighting": "harsh directional street light with strong shadows",
+        "composition": "product mounted on or placed against an urban wall with dynamic angles and street-art elements",
+    },
+]
+
+# Use date as seed so the theme is consistent within a day but changes daily
+rng = random.Random(date.today().toordinal())
+theme = rng.choice(THEMES)
+
 prompt = f"""
-Create a modern Instagram-style product advertisement.
+Create a stunning Instagram-style product advertisement image.
 
 Brand: {brand_name}
 Product: {name}
@@ -127,15 +185,24 @@ Description: {description}
 Key features: {key_features}
 Use cases: {use_cases}
 
-Use the uploaded reference images for visual inspiration.
-Use the uploaded product image as the actual product to feature.
+=== TODAY'S CREATIVE THEME: {theme["name"]} ===
 
-The product packaging should appear clearly in the image.
+Visual style: {theme["style"]}
+Mood and feel: {theme["mood"]}
+Lighting direction: {theme["lighting"]}
+Composition guide: {theme["composition"]}
 
-Make it bold, vibrant, clean, innovative, and social-media friendly.
+Use the uploaded reference images only for brand color and logo placement guidance.
+Use the uploaded product image as the actual product to feature — show it clearly and prominently.
 
-Do not copy the reference images directly.
-Create a fresh new composition inspired by them.
+Requirements:
+- The product packaging must be clearly visible and recognizable
+- The tagline "{tagline}" should appear as styled text in the image
+- The brand name "{brand_name}" should be subtly but clearly present
+- Apply the theme above faithfully — this must look and feel like "{theme["name"]}"
+- Do NOT copy the reference images; create an entirely fresh original composition
+- Optimize for square (1:1) Instagram format
+- Make it thumb-stopping and scroll-stopping on social media
 """
 
 contents = [prompt] + ref_images + product_images
@@ -162,8 +229,8 @@ if not saved:
     raise ValueError("No image was returned by Gemini")
 
 send_email_with_attachment(
-    subject=f"Daily KLAPIT Creative - {name}",
-    body=f"Attached is today's generated creative for {name}.",
+    subject=f"Daily KLAPIT Creative - {name} [{theme['name']}]",
+    body=f"Attached is today's generated creative for {name}.\n\nTheme: {theme['name']}\n{theme['mood'].capitalize()}.",
     attachment_path=output_path
 )
 
