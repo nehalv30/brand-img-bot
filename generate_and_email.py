@@ -208,7 +208,7 @@ Requirements:
 contents = [prompt] + ref_images + product_images
 
 response = client.models.generate_content(
-    model="ggemini-3-pro-image-preview",
+    model="gemini-3-pro-image-preview",
     contents=contents,
 )
 
