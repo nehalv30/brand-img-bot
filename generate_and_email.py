@@ -205,12 +205,10 @@ Requirements:
 - Make it thumb-stopping and scroll-stopping on social media
 """
 
-selected_product = [rng.choice(product_images)]
-selected_refs = rng.sample(ref_images, min(2, len(ref_images)))
-contents = [prompt] + selected_refs + selected_product
+contents = [prompt] + ref_images + product_images
 
 response = client.models.generate_content(
-    model="gemini-3.1-flash-image-preview",
+    model="gemini-2.5-flash-image",
     contents=contents,
 )
 
