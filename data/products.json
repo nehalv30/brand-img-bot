@@ -1,21 +1,272 @@
 [
   {
-    "id": "product_001",
-    "name": "Super Hook",
-    "description": "Strong self-adhesive utility hook for home use.",
+    "folder": "KMHS",
+    "name": "Klapit Magnetic Hanging Strips",
+    "description": "ADD DESCRIPTION HERE",
     "key_features": [
-      "strong grip",
-      "easy to install",
-      "no drilling",
-      "useful for home organization"
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
     ],
     "use_cases": [
-      "hanging frames",
-      "hanging decor",
-      "hanging boards",
-      "home utility use"
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
     ],
     "brand_name": "KLAPIT",
-    "tagline": "Smart utility for modern spaces"
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KSS/Gripzilla Roll 1m",
+    "name": "Gripzilla Roll 1m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KSS/Gripzilla Roll 3m",
+    "name": "Gripzilla Roll 3m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KSS/EzHold Strip",
+    "name": "EzHold Strip",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KSS/Gripzilla Strip",
+    "name": "Gripzilla Strip",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KST/Tough/Tough1m",
+    "name": "Klapit Super Tape Tough 1m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KST/Tough/Tough3m",
+    "name": "Klapit Super Tape Tough 3m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KST/Tough/Tough5m",
+    "name": "Klapit Super Tape Tough 5m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KST/Slim/Slim1m",
+    "name": "Klapit Super Tape Slim 1m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KST/Slim/Slim3m",
+    "name": "Klapit Super Tape Slim 3m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KST/Slim/Slim7m",
+    "name": "Klapit Super Tape Slim 7m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KST/Slim/Slim10m",
+    "name": "Klapit Super Tape Slim 10m",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KSH/Silver",
+    "name": "Klapit Super Hooks Silver",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KSH/Clear",
+    "name": "Klapit Super Hooks Clear",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
+  },
+  {
+    "folder": "KSH/Gold",
+    "name": "Klapit Super Hooks Gold",
+    "description": "ADD DESCRIPTION HERE",
+    "key_features": [
+      "ADD FEATURE 1",
+      "ADD FEATURE 2",
+      "ADD FEATURE 3",
+      "ADD FEATURE 4"
+    ],
+    "use_cases": [
+      "ADD USE CASE 1",
+      "ADD USE CASE 2",
+      "ADD USE CASE 3"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "ADD TAGLINE HERE"
   }
 ]
