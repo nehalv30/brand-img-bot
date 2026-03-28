@@ -238,31 +238,40 @@ for i, (concept, style) in enumerate(posts_today, 1):
         raise ValueError(f"Could not load image: {all_image_paths[(i - 1) % len(all_image_paths)]}")
 
     prompt = f"""
-You are creating a professional Instagram post for KLAPiT — a brand that makes adhesive mounting products (nano tapes, strips, and hooks) that let people hang and organize things without drills or nails.
+You are a world-class creative director at a top advertising agency. Your job is to create a single, stunning Instagram post for KLAPiT — a premium home organization brand that makes nano-adhesive tapes, strips, and hooks that let people hang and organize anything without drills or nails.
+
+Think of brands like 3M Command Strips, Sugru, or Scotch — but more premium and modern. Every post must look like it belongs in a top-tier brand's Instagram feed.
 
 PRODUCT: {name}
 Brand: {brand_name}
 Tagline: {tagline}
-Description: {description}
+What it does: {description}
 Key features: {key_features}
 Use cases: {use_cases}
 
-=== TODAY'S POST CONCEPT: {concept["name"]} ===
+=== POST CONCEPT: {concept["name"]} ===
 {concept["concept"]}
-Text direction: {concept["text_direction"]}
+Text treatment: {concept["text_direction"]}
 
 === VISUAL STYLE: {style["name"]} ===
-Style: {style["style"]}
+{style["style"]}
 Lighting: {style["lighting"]}
 
-RULES — FOLLOW STRICTLY:
-1. The uploaded image is the real KLAPiT product packaging. Show it clearly somewhere in the frame — as a corner insert, resting on a surface, being held, or in use. It must be recognizable, not blurry or tiny.
-2. The product must look EXACTLY as it does in the uploaded photo — same colors, same shape, same design. Do not hallucinate or invent product details. If showing the product in use, it must look physically accurate and realistic — no goo, no unrealistic adhesive effects, no mislabeled parts.
-3. Be creative and match the post concept fully — lifestyle scenes, installation moments, before/after, stats, whatever the concept calls for. Make it engaging and true to how the product actually works.
-4. Keep the overall look MINIMALISTIC — clean backgrounds, intentional composition, no clutter or loud colors.
-5. Text overlay: one strong headline, brand name, and tagline only. Clean sans-serif font. Maximum 3 lines. No text placed on top of the product.
-6. SQUARE (1:1) format — the image must be perfectly square, not portrait or landscape.
-7. Must feel like a real premium brand ad — creative, confident, and professional. Not AI-generated looking.
+CREATIVE DIRECTION:
+- Think carefully about what scene best shows this product's value. A hook should be shown holding something beautiful (towels, coats, plants, bags). Tape should be shown securing something in a satisfying, clean way. Strips should show a perfectly hung frame or rug.
+- The scene must feel REAL and ASPIRATIONAL — like a photo from a beautifully designed home, not a stock photo or generic AI scene.
+- Typography must be intentional — choose font weight, size, and placement like a designer would. The headline should feel bold and confident, not just text slapped on an image.
+- Color palette should be cohesive — the background, props, lighting, and text should all feel like they belong together.
+- Every element in the frame must have a reason to be there. No random props, no generic filler.
+
+PRODUCT ACCURACY:
+- The uploaded photo shows the real KLAPiT product. Reproduce it accurately — same shape, color, and design. Do not invent or distort product details.
+- Show it clearly in the frame: as a corner insert, on a styled surface, leaning against a wall, or actively being used in a realistic way.
+
+FORMAT:
+- Perfectly SQUARE (1:1) — not portrait, not landscape.
+- Clean sans-serif typography. Max 3 lines of text total.
+- Minimalistic but impactful — premium brands say more with less.
 """
 
     contents = [prompt] + angle_image
