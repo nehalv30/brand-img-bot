@@ -20,7 +20,6 @@ EMAIL_APP_PASSWORD = os.getenv("EMAIL_APP_PASSWORD")
 
 if not API_KEY:
     raise ValueError("GEMINI_API_KEY not found in .env file")
-
 if not EMAIL_FROM or not EMAIL_TO or not EMAIL_APP_PASSWORD:
     raise ValueError("Email settings are missing in .env file")
 
@@ -40,7 +39,6 @@ ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 def get_image_paths(folder: Path) -> list[Path]:
     if not folder.exists():
         raise FileNotFoundError(f"Folder not found: {folder}")
-
     paths = [
         p for p in folder.iterdir()
         if p.is_file()
@@ -62,63 +60,54 @@ def load_pil_images(paths: list[Path]) -> list[Image.Image]:
     return images
 
 
-def load_product_data() -> dict:
+def load_products() -> list[dict]:
     if not DATA_FILE.exists():
         raise FileNotFoundError(f"Missing file: {DATA_FILE}")
-
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-
     if not data or not isinstance(data, list):
         raise ValueError("products.json must contain a list with at least one product")
+    return data
 
-    return data[0]
 
-
-def send_email_with_attachment(subject: str, body: str, attachment_path: Path):
+def send_email_with_attachments(subject: str, body: str, attachment_paths: list[Path]):
     msg = EmailMessage()
     msg["Subject"] = subject
     msg["From"] = EMAIL_FROM
     msg["To"] = EMAIL_TO
     msg.set_content(body)
 
-    with open(attachment_path, "rb") as f:
-        msg.add_attachment(
-            f.read(),
-            maintype="image",
-            subtype="png",
-            filename=attachment_path.name
-        )
+    for path in attachment_paths:
+        with open(path, "rb") as f:
+            msg.add_attachment(
+                f.read(),
+                maintype="image",
+                subtype="png",
+                filename=path.name,
+            )
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.login(EMAIL_FROM, EMAIL_APP_PASSWORD)
         smtp.send_message(msg)
 
 
-product = load_product_data()
+def generate_image(contents, max_retries=10, retry_delay=30):
+    for attempt in range(1, max_retries + 1):
+        try:
+            return client.models.generate_content(
+                model="gemini-2.5-flash-image",
+                contents=contents,
+            )
+        except Exception as e:
+            if "503" in str(e) or "UNAVAILABLE" in str(e):
+                if attempt < max_retries:
+                    print(f"Model unavailable (attempt {attempt}/{max_retries}). Retrying in {retry_delay}s...")
+                    time.sleep(retry_delay)
+                else:
+                    raise RuntimeError(f"Model still unavailable after {max_retries} attempts") from e
+            else:
+                raise
 
-ref_paths = get_image_paths(REF_DIR)
-product_paths = get_image_paths(PROD_DIR)
-
-if not ref_paths:
-    raise ValueError("No reference images found in assets/brand_refs")
-if not product_paths:
-    raise ValueError("No product images found in assets/products")
-
-ref_images = load_pil_images(ref_paths)
-product_images = load_pil_images(product_paths)
-
-if not ref_images:
-    raise ValueError("No valid reference images could be opened")
-if not product_images:
-    raise ValueError("No valid product images could be opened")
-
-name = product["name"]
-description = product["description"]
-brand_name = product["brand_name"]
-tagline = product["tagline"]
-key_features = ", ".join(product["key_features"])
-use_cases = ", ".join(product["use_cases"])
 
 THEMES = [
     {
@@ -172,11 +161,58 @@ THEMES = [
     },
 ]
 
-# Use date as seed so the theme is consistent within a day but changes daily
+# Use date as seed so picks are consistent within a day but change daily
 rng = random.Random(date.today().toordinal())
-theme = rng.choice(THEMES)
 
-prompt = f"""
+# Pick one product for today
+products = load_products()
+product = rng.choice(products)
+
+name = product["name"]
+description = product["description"]
+brand_name = product["brand_name"]
+tagline = product["tagline"]
+key_features = ", ".join(product["key_features"])
+use_cases = ", ".join(product["use_cases"])
+
+print(f"Today's product: {name}")
+
+# Load one random variation image from the product's folder
+product_folder = PROD_DIR / name
+if not product_folder.exists():
+    raise FileNotFoundError(
+        f"Product folder not found: {product_folder}\n"
+        f"Expected: assets/products/{name}/"
+    )
+
+variation_paths = get_image_paths(product_folder)
+if not variation_paths:
+    raise ValueError(f"No images found in {product_folder}")
+
+selected_variation = rng.choice(variation_paths)
+print(f"Selected variation: {selected_variation.name}")
+
+product_images = load_pil_images([selected_variation])
+if not product_images:
+    raise ValueError(f"Could not load image: {selected_variation}")
+
+# Load brand reference images (limit to 2)
+ref_paths = get_image_paths(REF_DIR)
+if not ref_paths:
+    raise ValueError("No reference images found in assets/brand_refs")
+ref_images = load_pil_images(ref_paths[:2])
+
+# Pick 3 unique themes for today
+themes_today = rng.sample(THEMES, 3)
+print(f"Today's themes: {', '.join(t['name'] for t in themes_today)}\n")
+
+# Generate one image per theme
+output_paths = []
+
+for i, theme in enumerate(themes_today, 1):
+    print(f"Generating image {i}/3 — Theme: {theme['name']} ...")
+
+    prompt = f"""
 Create a stunning Instagram-style product advertisement image.
 
 Brand: {brand_name}
@@ -206,49 +242,40 @@ Requirements:
 - Make it thumb-stopping and scroll-stopping on social media
 """
 
-contents = [prompt] + ref_images + product_images
+    contents = [prompt] + ref_images + product_images
+    response = generate_image(contents)
 
-MAX_RETRIES = 10
-RETRY_DELAY = 30  # seconds between retries
+    theme_slug = theme["name"].lower().replace(" ", "_").replace("&", "and")
+    output_path = OUT_DIR / f"generated_post_{i}_{theme_slug}.png"
 
-response = None
-for attempt in range(1, MAX_RETRIES + 1):
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash-image",
-            contents=contents,
-        )
-        break
-    except Exception as e:
-        if "503" in str(e) or "UNAVAILABLE" in str(e):
-            if attempt < MAX_RETRIES:
-                print(f"Model unavailable (attempt {attempt}/{MAX_RETRIES}). Retrying in {RETRY_DELAY}s...")
-                time.sleep(RETRY_DELAY)
-            else:
-                raise RuntimeError(f"Model still unavailable after {MAX_RETRIES} attempts") from e
-        else:
-            raise
+    saved = False
+    for part in response.parts:
+        if getattr(part, "inline_data", None) is not None:
+            image = part.as_image()
+            image.save(output_path)
+            print(f"  Saved: {output_path.name}")
+            output_paths.append(output_path)
+            saved = True
+            break
+        elif getattr(part, "text", None):
+            print(f"  Model said: {part.text}")
 
-saved = False
-output_path = OUT_DIR / "generated_post.png"
+    if not saved:
+        print(f"  Warning: No image returned for theme '{theme['name']}'")
 
-for part in response.parts:
-    if getattr(part, "inline_data", None) is not None:
-        image = part.as_image()
-        image.save(output_path)
-        print(f"Image saved to: {output_path}")
-        saved = True
-        break
-    elif getattr(part, "text", None):
-        print(part.text)
+if not output_paths:
+    raise ValueError("No images were generated across all themes")
 
-if not saved:
-    raise ValueError("No image was returned by Gemini")
-
-send_email_with_attachment(
-    subject=f"Daily KLAPIT Creative - {name} [{theme['name']}]",
-    body=f"Attached is today's generated creative for {name}.\n\nTheme: {theme['name']}\n{theme['mood'].capitalize()}.",
-    attachment_path=output_path
+# Send all generated images in one email
+theme_names = ", ".join(t["name"] for t in themes_today)
+send_email_with_attachments(
+    subject=f"Daily KLAPIT Creatives — {name} ({len(output_paths)} looks)",
+    body=(
+        f"Attached are today's {len(output_paths)} generated creatives for {name}.\n\n"
+        f"Themes: {theme_names}\n\n"
+        f"Variation used: {selected_variation.name}"
+    ),
+    attachment_paths=output_paths,
 )
 
-print(f"Email sent to: {EMAIL_TO}")
+print(f"\nEmail sent to {EMAIL_TO} with {len(output_paths)} image(s).")
