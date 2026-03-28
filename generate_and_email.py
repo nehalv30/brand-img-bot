@@ -108,55 +108,86 @@ def generate_image(contents, max_retries=10, retry_delay=30):
                 raise
 
 
-THEMES = [
+# Visual styles — all minimalistic, clean, Instagram-ready
+VISUAL_STYLES = [
     {
-        "name": "Minimalist Zen",
-        "style": "ultra-clean white space, single hero product shot, subtle shadow, sans-serif typography, monochromatic palette with one accent color",
-        "mood": "calm, premium, uncluttered",
-        "lighting": "soft diffused studio light with gentle highlights",
-        "composition": "centered product floating on white, with minimal text and lots of breathing room",
+        "name": "Clean White Studio",
+        "style": "pure white background, soft drop shadow, sans-serif typography, one subtle accent color from the product",
+        "lighting": "soft diffused studio light, no harsh shadows",
     },
     {
-        "name": "Futuristic Tech",
-        "style": "dark background with glowing neon outlines, holographic reflections, geometric grid lines, futuristic HUD elements",
-        "mood": "innovative, cutting-edge, high-tech",
-        "lighting": "dramatic back-lit glow with cyan/purple neon accents",
-        "composition": "product at an angle with light trails and digital data particles surrounding it",
+        "name": "Warm Minimal",
+        "style": "warm off-white or cream background, natural wood or linen texture as a subtle prop, clean layout",
+        "lighting": "soft warm daylight from the side, gentle shadows",
     },
     {
-        "name": "Lifestyle Warmth",
-        "style": "warm earthy tones, natural textures (wood, linen, stone), cozy home setting, soft bokeh background",
-        "mood": "homey, relatable, aspirational everyday life",
-        "lighting": "warm golden-hour window light, soft shadows",
-        "composition": "product placed in a real home scene with complementary lifestyle props",
+        "name": "Dark Elegant",
+        "style": "deep charcoal or navy background, product lit sharply, gold or white minimal typography, premium feel",
+        "lighting": "single directional studio light, dramatic but clean",
     },
     {
-        "name": "Bold Pop Art",
-        "style": "vivid saturated colors, halftone dot patterns, thick outlines, retro-modern comic aesthetic, strong typography",
-        "mood": "energetic, fun, eye-catching",
-        "lighting": "flat graphic look with strong shadows and highlights, no photorealism",
-        "composition": "product enlarged as the hero with graphic shapes, starbursts, and bold tagline text",
+        "name": "Airy Lifestyle",
+        "style": "bright, airy room setting — white walls, light wood, minimal decor props, lots of breathing room",
+        "lighting": "natural window light, soft and even",
     },
     {
-        "name": "Nature & Sustainability",
-        "style": "lush greenery, botanical elements, organic shapes, earthy green/brown/cream palette, eco-conscious feel",
-        "mood": "fresh, natural, responsible, trustworthy",
-        "lighting": "bright natural daylight with dappled leaf shadows",
-        "composition": "product nestled among plants and natural materials, grounded and organic framing",
+        "name": "Editorial Flat Lay",
+        "style": "top-down flat lay, product surrounded by 2-3 minimal props on a neutral surface, clean grid composition",
+        "lighting": "even overhead light, no strong shadows",
+    },
+]
+
+# Post concepts — what story each post tells
+POST_CONCEPTS = [
+    {
+        "name": "Problem Solver",
+        "concept": "Show the frustrating old way (drills, nails, wall damage, mess) contrasted with the clean KLAPiT solution. Headline should be something like 'Why damage your walls?' or 'No drills. No nails. No stress.'",
+        "text_direction": "Bold problem statement at top, clean solution visual in center, product + tagline at bottom",
     },
     {
-        "name": "Luxury Editorial",
-        "style": "black and gold palette, marble or velvet textures, serif typography, high-fashion magazine layout",
-        "mood": "exclusive, sophisticated, aspirational",
-        "lighting": "dramatic side-lit Rembrandt lighting on a dark background",
-        "composition": "product as the centerpiece with elegant negative space, metallic accents, and refined details",
+        "name": "Strength Stat",
+        "concept": "Make the holding power the star. Show a large, bold number (e.g. '60 LBS' or '500 LBS') as the visual hero, with a minimal scene showing something heavy being held effortlessly by the product.",
+        "text_direction": "Huge stat as headline, short line like 'Held by just one strip', product packaging shown small but visible",
     },
     {
-        "name": "Urban Street",
-        "style": "gritty concrete textures, graffiti-inspired typography, raw industrial environment, bold contrasting colors",
-        "mood": "authentic, edgy, urban-cool",
-        "lighting": "harsh directional street light with strong shadows",
-        "composition": "product mounted on or placed against an urban wall with dynamic angles and street-art elements",
+        "name": "Room Transform",
+        "concept": "Show a beautifully organized, aspirational living space — a gallery wall, a neat kitchen, a styled shelf — where the product quietly made it all possible. Product shown subtly in the corner.",
+        "text_direction": "Minimal text, one soft headline like 'Your walls. Your style.' Brand name clean and small.",
+    },
+    {
+        "name": "The Clever Use",
+        "concept": "Highlight one unexpected or creative use case for the product that surprises people — like using tape to secure a rug, hooks for charging cables, or strips for outdoor decor. Headline should feel like a discovery.",
+        "text_direction": "Curiosity-driving headline like 'Wait, you can use this for that?' or 'The hack your home needs', product shown being used",
+    },
+    {
+        "name": "One Step Install",
+        "concept": "Show the satisfying simplicity of installation — peel, stick, done. Emphasize instant use and zero tools needed. Very clean and satisfying visual.",
+        "text_direction": "Headline: 'Peel. Stick. Done.' or '3 seconds to a cleaner home', minimal step visual, product prominent",
+    },
+    {
+        "name": "Feature Spotlight",
+        "concept": "Zoom in on one key feature — waterproof, residue-free removal, nano-technology, or reusability. Make that single feature feel like a superpower with a clean visual metaphor.",
+        "text_direction": "Feature name as bold headline, one-line explanation below, clean product image",
+    },
+    {
+        "name": "The Invisible Hero",
+        "concept": "Show a stunning room or wall setup where the product is barely visible — hidden behind a frame, under a rug edge, behind a hook — but everything looks perfect because of it. Message: great products work quietly.",
+        "text_direction": "Subtle headline like 'You won't see it. You'll feel it.' Product shown as a tiny but important detail",
+    },
+    {
+        "name": "Before vs After",
+        "concept": "Split or transition visual — left/top shows bare, empty, or damaged wall; right/bottom shows the same space beautifully decorated using KLAPiT. Clean and satisfying transformation.",
+        "text_direction": "Minimal labels 'Before' and 'After', bold tagline across the middle or bottom, product shown in after side",
+    },
+    {
+        "name": "Relatable Moment",
+        "concept": "Capture a real, relatable home moment — moving into a new place, redecorating, tired of nails everywhere. Make the viewer feel seen. Product is the easy answer to their situation.",
+        "text_direction": "Conversational headline like 'Moving in? Skip the nails.' or 'Finally, walls you won't regret.', warm and human tone",
+    },
+    {
+        "name": "Clean Aesthetic Hero",
+        "concept": "Pure minimal product post — the packaging looks premium, the layout is intentional, the typography is perfect. No busy scene, just the product presented like a luxury item with one strong brand statement.",
+        "text_direction": "Brand name large and clean, tagline small below, product centered with lots of white space",
     },
 ]
 
@@ -189,59 +220,55 @@ if not all_image_paths:
 rng.shuffle(all_image_paths)
 print(f"Found {len(all_image_paths)} angle(s) for {name}")
 
-# Pick 3 unique themes for today
-themes_today = rng.sample(THEMES, 3)
-print(f"Today's themes: {', '.join(t['name'] for t in themes_today)}\n")
+# Pick 3 unique concept + style combos for today
+concepts_today = rng.sample(POST_CONCEPTS, 3)
+styles_today = rng.sample(VISUAL_STYLES, 3)
+posts_today = list(zip(concepts_today, styles_today))
+print(f"Today's posts: {', '.join(c['name'] + ' / ' + s['name'] for c, s in posts_today)}\n")
 
-# Generate one image per theme
+# Generate one image per concept+style combo
 output_paths = []
 
-for i, theme in enumerate(themes_today, 1):
-    print(f"Generating image {i}/3 — Theme: {theme['name']} ...")
+for i, (concept, style) in enumerate(posts_today, 1):
+    print(f"Generating image {i}/3 — {concept['name']} + {style['name']} ...")
 
-    # Use a different angle for each generation; cycle if fewer images than themes
+    # Use a different angle for each generation; cycle if fewer images than posts
     angle_image = load_pil_images([all_image_paths[(i - 1) % len(all_image_paths)]])
     if not angle_image:
         raise ValueError(f"Could not load image: {all_image_paths[(i - 1) % len(all_image_paths)]}")
 
     prompt = f"""
-Create a professional, Instagram-ready square (1:1) product advertisement image for {brand_name}.
+You are creating a professional Instagram post for KLAPiT — a brand that makes adhesive mounting products (nano tapes, strips, and hooks) that let people hang and organize things without drills or nails.
 
-Product: {name}
+PRODUCT: {name}
+Brand: {brand_name}
 Tagline: {tagline}
 Description: {description}
 Key features: {key_features}
 Use cases: {use_cases}
 
-=== CREATIVE THEME: {theme["name"]} ===
+=== TODAY'S POST CONCEPT: {concept["name"]} ===
+{concept["concept"]}
+Text direction: {concept["text_direction"]}
 
-Visual style: {theme["style"]}
-Mood and feel: {theme["mood"]}
-Lighting direction: {theme["lighting"]}
-Composition guide: {theme["composition"]}
+=== VISUAL STYLE: {style["name"]} ===
+Style: {style["style"]}
+Lighting: {style["lighting"]}
 
-PRODUCT IMAGE INSTRUCTIONS:
-- Extract the product cleanly from the uploaded photo — ignore and discard its background entirely
-- Place only the product itself into the new themed scene
-- The product must look naturally lit and integrated into the scene, not pasted on top
-- Show the product clearly, prominently, and true to its real appearance
-
-BRAND INSTRUCTIONS:
-- The tagline "{tagline}" must appear as styled text in the image
-- The brand name "{brand_name}" should be present but not overwhelming
-
-QUALITY REQUIREMENTS:
-- Must feel like a premium, professional ad — not AI-generated
-- Apply the "{theme["name"]}" theme faithfully across every element
-- No watermarks, no borders, no fake device frames
-- Thumb-stopping and scroll-stopping on Instagram
+RULES — FOLLOW STRICTLY:
+1. The uploaded image is the real KLAPiT product packaging. Show it clearly somewhere in the frame — as a corner insert, placed on a surface, or being held/applied. It must be recognizable, not blurry or tiny.
+2. Keep the overall look MINIMALISTIC — no clutter, no busy backgrounds, no loud colors. Clean is premium.
+3. Text overlay must be minimal and intentional — one strong headline, brand name, and tagline only. Use clean sans-serif fonts. No more than 3 lines of text total.
+4. The scene and visual elements must directly relate to what this product does (mounting, hanging, organizing home items).
+5. Square (1:1) Instagram format.
+6. Must feel like a real brand ad — confident, clean, and premium. Not AI-generated looking.
 """
 
     contents = [prompt] + angle_image
     response = generate_image(contents)
 
-    theme_slug = theme["name"].lower().replace(" ", "_").replace("&", "and")
-    output_path = OUT_DIR / f"generated_post_{i}_{theme_slug}.png"
+    concept_slug = concept["name"].lower().replace(" ", "_")
+    output_path = OUT_DIR / f"generated_post_{i}_{concept_slug}.png"
 
     saved = False
     for part in response.parts:
@@ -256,18 +283,18 @@ QUALITY REQUIREMENTS:
             print(f"  Model said: {part.text}")
 
     if not saved:
-        print(f"  Warning: No image returned for theme '{theme['name']}'")
+        print(f"  Warning: No image returned for concept '{concept['name']}'")
 
 if not output_paths:
-    raise ValueError("No images were generated across all themes")
+    raise ValueError("No images were generated across all concepts")
 
 # Send all generated images in one email
-theme_names = ", ".join(t["name"] for t in themes_today)
+post_summary = ", ".join(f"{c['name']} ({s['name']})" for c, s in posts_today)
 send_email_with_attachments(
-    subject=f"Daily KLAPIT Creatives — {name} ({len(output_paths)} looks)",
+    subject=f"Daily KLAPIT Creatives — {name} ({len(output_paths)} posts)",
     body=(
         f"Attached are today's {len(output_paths)} generated creatives for {name}.\n\n"
-        f"Themes: {theme_names}"
+        f"Posts: {post_summary}"
     ),
     attachment_paths=output_paths,
 )
