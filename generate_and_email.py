@@ -26,7 +26,6 @@ if not EMAIL_FROM or not EMAIL_TO or not EMAIL_APP_PASSWORD:
 client = genai.Client(api_key=API_KEY)
 
 BASE_DIR = Path(__file__).resolve().parent
-REF_DIR = BASE_DIR / "assets" / "brand_refs"
 PROD_DIR = BASE_DIR / "assets"
 OUT_DIR = BASE_DIR / "output"
 DATA_FILE = BASE_DIR / "data" / "products.json"
@@ -190,12 +189,6 @@ if not all_image_paths:
 rng.shuffle(all_image_paths)
 print(f"Found {len(all_image_paths)} angle(s) for {name}")
 
-# Load brand reference images (limit to 2)
-ref_paths = get_image_paths(REF_DIR)
-if not ref_paths:
-    raise ValueError("No reference images found in assets/brand_refs")
-ref_images = load_pil_images(ref_paths[:2])
-
 # Pick 3 unique themes for today
 themes_today = rng.sample(THEMES, 3)
 print(f"Today's themes: {', '.join(t['name'] for t in themes_today)}\n")
@@ -234,7 +227,6 @@ PRODUCT IMAGE INSTRUCTIONS:
 - Show the product clearly, prominently, and true to its real appearance
 
 BRAND INSTRUCTIONS:
-- Use the uploaded brand reference images only for logo and color palette guidance
 - The tagline "{tagline}" must appear as styled text in the image
 - The brand name "{brand_name}" should be present but not overwhelming
 
@@ -245,7 +237,7 @@ QUALITY REQUIREMENTS:
 - Thumb-stopping and scroll-stopping on Instagram
 """
 
-    contents = [prompt] + ref_images + angle_image
+    contents = [prompt] + angle_image
     response = generate_image(contents)
 
     theme_slug = theme["name"].lower().replace(" ", "_").replace("&", "and")
