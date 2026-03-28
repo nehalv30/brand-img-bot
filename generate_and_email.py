@@ -2,6 +2,7 @@ import os
 import json
 import smtplib
 import random
+import time
 from datetime import date
 from email.message import EmailMessage
 from pathlib import Path
@@ -207,10 +208,26 @@ Requirements:
 
 contents = [prompt] + ref_images + product_images
 
-response = client.models.generate_content(
-    model="gemini-2.5-flash-image",
-    contents=contents,
-)
+MAX_RETRIES = 10
+RETRY_DELAY = 30  # seconds between retries
+
+response = None
+for attempt in range(1, MAX_RETRIES + 1):
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash-image",
+            contents=contents,
+        )
+        break
+    except Exception as e:
+        if "503" in str(e) or "UNAVAILABLE" in str(e):
+            if attempt < MAX_RETRIES:
+                print(f"Model unavailable (attempt {attempt}/{MAX_RETRIES}). Retrying in {RETRY_DELAY}s...")
+                time.sleep(RETRY_DELAY)
+            else:
+                raise RuntimeError(f"Model still unavailable after {MAX_RETRIES} attempts") from e
+        else:
+            raise
 
 saved = False
 output_path = OUT_DIR / "generated_post.png"
