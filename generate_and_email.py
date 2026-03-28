@@ -257,11 +257,12 @@ Lighting: {style["lighting"]}
 
 RULES — FOLLOW STRICTLY:
 1. The uploaded image is the real KLAPiT product packaging. Show it clearly somewhere in the frame — as a corner insert, placed on a surface, or being held/applied. It must be recognizable, not blurry or tiny.
-2. Keep the overall look MINIMALISTIC — no clutter, no busy backgrounds, no loud colors. Clean is premium.
-3. Text overlay must be minimal and intentional — one strong headline, brand name, and tagline only. Use clean sans-serif fonts. No more than 3 lines of text total.
-4. The scene and visual elements must directly relate to what this product does (mounting, hanging, organizing home items).
-5. Square (1:1) Instagram format.
-6. Must feel like a real brand ad — confident, clean, and premium. Not AI-generated looking.
+2. NEVER modify, reimagine, or stylize the product appearance. It must look EXACTLY as it does in the uploaded photo — same colors, same shape, same design. Do not add glowing effects, halos, labels, arrows, callouts, or any artistic overlays ON or AROUND the product itself.
+3. Keep the overall look MINIMALISTIC — no clutter, no busy backgrounds, no loud colors. Clean is premium.
+4. Text overlay must be minimal and intentional — one strong headline, brand name, and tagline only. Use clean sans-serif fonts. No more than 3 lines of text total. Do NOT place any text directly on the product.
+5. The scene and visual elements must directly relate to what this product does (mounting, hanging, organizing home items).
+6. Square (1:1) Instagram format.
+7. Must feel like a real brand ad — confident, clean, and premium. Not AI-generated looking.
 """
 
     contents = [prompt] + angle_image
