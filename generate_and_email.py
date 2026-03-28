@@ -205,36 +205,41 @@ for i, theme in enumerate(themes_today, 1):
         raise ValueError(f"Could not load image: {all_image_paths[(i - 1) % len(all_image_paths)]}")
 
     prompt = f"""
-Create a professional, Instagram-ready square (1:1) product advertisement image for {brand_name}.
+Create a scroll-stopping Instagram advertisement image for KLAPiT — a brand that makes adhesive mounting products (tapes, strips, and hooks) that let people hang and organize things without drills or nails.
 
-Product: {name}
+PRODUCT BEING ADVERTISED: {name}
+Brand: {brand_name}
 Tagline: {tagline}
-Description: {description}
+What it does: {description}
 Key features: {key_features}
 Use cases: {use_cases}
 
 === CREATIVE THEME: {theme["name"]} ===
+Style: {theme["style"]}
+Mood: {theme["mood"]}
+Lighting: {theme["lighting"]}
+Composition: {theme["composition"]}
 
-Visual style: {theme["style"]}
-Mood and feel: {theme["mood"]}
-Lighting direction: {theme["lighting"]}
-Composition guide: {theme["composition"]}
+CORE CONCEPT — THIS IS CRITICAL:
+Do NOT show the product floating on a blank background. Instead, show a LIFESTYLE SCENE where the product is ACTIVELY BEING USED or HAS BEEN USED to achieve something beautiful. Think:
+- Hooks holding towels, coats, plants, or decorative items on a clean wall
+- Tape or strips securing a shelf, rug, picture frame, or kitchen organizer
+- A beautifully decorated room where the product made it possible — no drills, no damage
 
-PRODUCT IMAGE INSTRUCTIONS:
-- Extract the product cleanly from the uploaded photo — ignore and discard its background entirely
-- Place only the product itself into the new themed scene
-- The product must look naturally lit and integrated into the scene, not pasted on top
-- Show the product clearly, prominently, and true to its real appearance
+The uploaded product image shows the actual KLAPiT product packaging — include it visibly in the scene (e.g., placed on a table nearby, shown in a corner insert, or being applied to a surface). It must be recognizable.
 
-BRAND INSTRUCTIONS:
-- The tagline "{tagline}" must appear as styled text in the image
-- The brand name "{brand_name}" should be present but not overwhelming
+COMPOSITION RULES:
+- Show a real, aspirational home or lifestyle setting relevant to the product's use case
+- The KLAPiT product packaging from the uploaded image must appear clearly somewhere in the frame
+- Add bold, clean text overlay with the tagline "{tagline}" and brand name "{brand_name}"
+- Text should be large, legible, and styled to match the theme — not cluttered
+- Optional: include a short punchy benefit line like "No Nails. No Drills." or "Holds up to {key_features.split(',')[0]}"
 
-QUALITY REQUIREMENTS:
-- Must feel like a premium, professional ad — not AI-generated
-- Apply the "{theme["name"]}" theme faithfully across every element
-- No watermarks, no borders, no fake device frames
-- Thumb-stopping and scroll-stopping on Instagram
+FORMAT & QUALITY:
+- Square (1:1) Instagram format
+- Must look like a real brand's social media post — not AI-generated
+- Clean, intentional composition with strong visual hierarchy
+- Apply the "{theme["name"]}" theme across the entire image including background, props, lighting, and typography
 """
 
     contents = [prompt] + angle_image
