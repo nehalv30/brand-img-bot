@@ -27,7 +27,7 @@ client = genai.Client(api_key=API_KEY)
 
 BASE_DIR = Path(__file__).resolve().parent
 REF_DIR = BASE_DIR / "assets" / "brand_refs"
-PROD_DIR = BASE_DIR / "assets" / "products"
+PROD_DIR = BASE_DIR / "assets"
 OUT_DIR = BASE_DIR / "output"
 DATA_FILE = BASE_DIR / "data" / "products.json"
 
