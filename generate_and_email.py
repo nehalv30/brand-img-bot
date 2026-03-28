@@ -160,6 +160,16 @@ POST_CONCEPTS = [
         "text_direction": "Discovery headline like 'The home hack you didn't know you needed' or 'Organize everything. Damage nothing.', product packaging visible",
     },
     {
+        "name": "One Step Install",
+        "concept": "Show the satisfying simplicity of using KLAPiT — someone pressing a hook onto a wall, peeling a strip, or sticking tape in one clean motion. The action must look realistic and natural, not stylized. The result (item hanging perfectly) is visible too.",
+        "text_direction": "Headline: 'Peel. Stick. Done.' or 'Instant hold. Zero tools.', product packaging visible, minimal supporting text",
+    },
+    {
+        "name": "Feature Spotlight",
+        "concept": "Highlight one key feature through a creative visual metaphor — waterproof shown with a bathroom scene, strength shown with a heavy item hanging confidently, reusability shown with a wall being redecorated. The feature is demonstrated through the scene, not labeled or diagrammed.",
+        "text_direction": "Feature as bold headline (e.g. 'Waterproof.' or 'Holds 60 LBS.'), one-line explanation below, product packaging shown clearly",
+    },
+    {
         "name": "The Invisible Hero",
         "concept": "A stunning, aspirational room where everything is perfectly hung and organized. The product is barely visible — just a small hook behind a coat, or the edge of a strip behind a frame — but the space looks immaculate because of it.",
         "text_direction": "Subtle headline like 'You won't see it. You'll love what it does.' Brand name clean and small.",
@@ -246,13 +256,13 @@ Style: {style["style"]}
 Lighting: {style["lighting"]}
 
 RULES — FOLLOW STRICTLY:
-1. The uploaded image is the real KLAPiT product packaging. Show it clearly somewhere in the frame — as a corner insert, resting on a surface, or leaning against a wall. It must be recognizable, not blurry or tiny.
-2. NEVER modify, reimagine, or stylize the product appearance. It must look EXACTLY as it does in the uploaded photo — same colors, same shape, same design. No glowing effects, halos, labels, arrows, or overlays on the product.
-3. DO NOT show hands touching, peeling, applying, or removing the product. DO NOT show installation steps, adhesive strings, or removal processes. Show OUTCOMES and LIFESTYLE RESULTS only.
-4. Keep the overall look MINIMALISTIC — no clutter, no busy backgrounds, no loud colors. Clean is premium.
+1. The uploaded image is the real KLAPiT product packaging. Show it clearly somewhere in the frame — as a corner insert, resting on a surface, being held, or in use. It must be recognizable, not blurry or tiny.
+2. The product must look EXACTLY as it does in the uploaded photo — same colors, same shape, same design. Do not hallucinate or invent product details. If showing the product in use, it must look physically accurate and realistic — no goo, no unrealistic adhesive effects, no mislabeled parts.
+3. Be creative and match the post concept fully — lifestyle scenes, installation moments, before/after, stats, whatever the concept calls for. Make it engaging and true to how the product actually works.
+4. Keep the overall look MINIMALISTIC — clean backgrounds, intentional composition, no clutter or loud colors.
 5. Text overlay: one strong headline, brand name, and tagline only. Clean sans-serif font. Maximum 3 lines. No text placed on top of the product.
-6. SQUARE (1:1) format — this is critical. The image must be perfectly square, not portrait or landscape.
-7. Must feel like a real premium brand ad. Confident, clean, intentional. Not AI-generated looking.
+6. SQUARE (1:1) format — the image must be perfectly square, not portrait or landscape.
+7. Must feel like a real premium brand ad — creative, confident, and professional. Not AI-generated looking.
 """
 
     contents = [prompt] + angle_image
