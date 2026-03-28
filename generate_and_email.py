@@ -177,24 +177,18 @@ use_cases = ", ".join(product["use_cases"])
 
 print(f"Today's product: {name}")
 
-# Load one random variation image from the product's folder
-product_folder = PROD_DIR / name
+# Load product images from the folder path defined in JSON
+product_folder = PROD_DIR / product["folder"]
 if not product_folder.exists():
-    raise FileNotFoundError(
-        f"Product folder not found: {product_folder}\n"
-        f"Expected: assets/products/{name}/"
-    )
+    raise FileNotFoundError(f"Product folder not found: {product_folder}")
 
-variation_paths = get_image_paths(product_folder)
-if not variation_paths:
+all_image_paths = get_image_paths(product_folder)
+if not all_image_paths:
     raise ValueError(f"No images found in {product_folder}")
 
-selected_variation = rng.choice(variation_paths)
-print(f"Selected variation: {selected_variation.name}")
-
-product_images = load_pil_images([selected_variation])
-if not product_images:
-    raise ValueError(f"Could not load image: {selected_variation}")
+# Shuffle so each of the 3 generations gets a different angle
+rng.shuffle(all_image_paths)
+print(f"Found {len(all_image_paths)} angle(s) for {name}")
 
 # Load brand reference images (limit to 2)
 ref_paths = get_image_paths(REF_DIR)
@@ -212,37 +206,46 @@ output_paths = []
 for i, theme in enumerate(themes_today, 1):
     print(f"Generating image {i}/3 — Theme: {theme['name']} ...")
 
-    prompt = f"""
-Create a stunning Instagram-style product advertisement image.
+    # Use a different angle for each generation; cycle if fewer images than themes
+    angle_image = load_pil_images([all_image_paths[(i - 1) % len(all_image_paths)]])
+    if not angle_image:
+        raise ValueError(f"Could not load image: {all_image_paths[(i - 1) % len(all_image_paths)]}")
 
-Brand: {brand_name}
+    prompt = f"""
+Create a professional, Instagram-ready square (1:1) product advertisement image for {brand_name}.
+
 Product: {name}
 Tagline: {tagline}
 Description: {description}
 Key features: {key_features}
 Use cases: {use_cases}
 
-=== TODAY'S CREATIVE THEME: {theme["name"]} ===
+=== CREATIVE THEME: {theme["name"]} ===
 
 Visual style: {theme["style"]}
 Mood and feel: {theme["mood"]}
 Lighting direction: {theme["lighting"]}
 Composition guide: {theme["composition"]}
 
-Use the uploaded reference images only for brand color and logo placement guidance.
-Use the uploaded product image as the actual product to feature — show it clearly and prominently.
+PRODUCT IMAGE INSTRUCTIONS:
+- Extract the product cleanly from the uploaded photo — ignore and discard its background entirely
+- Place only the product itself into the new themed scene
+- The product must look naturally lit and integrated into the scene, not pasted on top
+- Show the product clearly, prominently, and true to its real appearance
 
-Requirements:
-- The product packaging must be clearly visible and recognizable
-- The tagline "{tagline}" should appear as styled text in the image
-- The brand name "{brand_name}" should be subtly but clearly present
-- Apply the theme above faithfully — this must look and feel like "{theme["name"]}"
-- Do NOT copy the reference images; create an entirely fresh original composition
-- Optimize for square (1:1) Instagram format
-- Make it thumb-stopping and scroll-stopping on social media
+BRAND INSTRUCTIONS:
+- Use the uploaded brand reference images only for logo and color palette guidance
+- The tagline "{tagline}" must appear as styled text in the image
+- The brand name "{brand_name}" should be present but not overwhelming
+
+QUALITY REQUIREMENTS:
+- Must feel like a premium, professional ad — not AI-generated
+- Apply the "{theme["name"]}" theme faithfully across every element
+- No watermarks, no borders, no fake device frames
+- Thumb-stopping and scroll-stopping on Instagram
 """
 
-    contents = [prompt] + ref_images + product_images
+    contents = [prompt] + ref_images + angle_image
     response = generate_image(contents)
 
     theme_slug = theme["name"].lower().replace(" ", "_").replace("&", "and")
@@ -272,8 +275,7 @@ send_email_with_attachments(
     subject=f"Daily KLAPIT Creatives — {name} ({len(output_paths)} looks)",
     body=(
         f"Attached are today's {len(output_paths)} generated creatives for {name}.\n\n"
-        f"Themes: {theme_names}\n\n"
-        f"Variation used: {selected_variation.name}"
+        f"Themes: {theme_names}"
     ),
     attachment_paths=output_paths,
 )
