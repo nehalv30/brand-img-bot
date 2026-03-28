@@ -1,21 +1,317 @@
 [
   {
-    "id": "product_001",
-    "name": "Super Hook",
-    "description": "Strong self-adhesive utility hook for home use.",
+    "folder": "KMHS",
+    "name": "Klapit Magnetic Hanging Strips",
+    "description": "Say goodbye to drills and screws with KLAPiT Magnetic Picture Hanging Strips. Using advanced Fiber-Infused Enhanced Nano Technology (FIEN) and super strong NED magnets, these strips offer a secure, damage-free, and reusable mounting solution for any space.",
     "key_features": [
-      "strong grip",
-      "easy to install",
-      "no drilling",
-      "useful for home organization"
+      "Revolutionary Magnetic Mounting: drill-free, damage-free hanging for pictures, electronics, and more with a strong magnetic hold",
+      "Nano-Technology Adhesion: FIEN technology offers superior durability and instant adhesion on glass, wood, metal, and more",
+      "Easy Installation & Adjustment: rotate, remove, and reposition items with ease — perfect for renters and frequent redecorators",
+      "Eco-Friendly & Reusable: designed for repeated use to minimize waste while delivering continued value",
+      "Versatile Use: ideal for pictures, clocks, remotes, USB speakers, and a wide range of home and office applications"
     ],
     "use_cases": [
-      "hanging frames",
-      "hanging decor",
-      "hanging boards",
-      "home utility use"
+      "Hanging picture frames and artwork",
+      "Mounting clocks and electronics",
+      "Home and office organization",
+      "Damage-free rental decorating",
+      "Replacing nails and screws on any wall"
     ],
     "brand_name": "KLAPIT",
-    "tagline": "Smart utility for modern spaces"
+    "tagline": "Hang it. Move it. Love it."
+  },
+  {
+    "folder": "KSS/Gripzilla Roll 1m",
+    "name": "Gripzilla Roll 1m",
+    "description": "KLAPiT Super Tape GRIPZILLA (1m Roll) is the ultimate heavy-duty double-sided nano tape using Fiber-Infused Enhanced Nanotechnology (FIEN). Holds up to 60LB/27KG, works on wood, tile, stone, glass, metal, and more — waterproof, residue-free, and built for indoor and outdoor use.",
+    "key_features": [
+      "Unmatched Strength: holds up to 60LB/27KG with advanced Fiber-Infused Enhanced Nanotechnology for secure, heavy-duty mounting",
+      "Versatile Applications: hang frames, secure rugs, stabilize furniture, and complete DIY projects on virtually any surface",
+      "Residue-Free Removal: clean removal with no sticky mess or surface damage — unlike foam or traditional adhesives",
+      "Waterproof: maintains a secure bond in kitchens, bathrooms, and outdoor environments even in wet or humid conditions",
+      "Effortless Installation: simply cut, peel, and stick for a quick and reliable mounting solution at home or in the office"
+    ],
+    "use_cases": [
+      "Hanging frames and wall art",
+      "Securing rugs and carpets",
+      "Stabilizing furniture",
+      "Outdoor and weatherproof mounting",
+      "DIY home and office projects"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Grip anything. Damage nothing."
+  },
+  {
+    "folder": "KSS/Gripzilla Roll 3m",
+    "name": "Gripzilla Roll 3m",
+    "description": "KLAPiT Super Tape GRIPZILLA (3m Roll) is the heavy-duty double-sided nano tape built for larger projects. Using Fiber-Infused Enhanced Nanotechnology (FIEN), it holds up to 180LB/81KG across wood, tile, stone, glass, metal, and more — waterproof, residue-free, and ready for indoor and outdoor use.",
+    "key_features": [
+      "Unmatched Strength: holds up to 180LB/81KG with advanced Fiber-Infused Enhanced Nanotechnology for the most demanding mounting tasks",
+      "Versatile Applications: hang frames, secure rugs, stabilize furniture, and complete large DIY projects on virtually any surface",
+      "Residue-Free Removal: clean removal with no sticky mess or surface damage — unlike foam or traditional adhesives",
+      "Waterproof: maintains a secure bond in kitchens, bathrooms, and outdoor environments even in wet or humid conditions",
+      "Effortless Installation: simply cut, peel, and stick — transparent design keeps surfaces looking clean and seamless"
+    ],
+    "use_cases": [
+      "Hanging frames and wall art",
+      "Securing rugs and carpets",
+      "Stabilizing furniture",
+      "Outdoor and weatherproof mounting",
+      "Large-scale DIY home and office projects"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "More roll. More hold. More power."
+  },
+  {
+    "folder": "KSS/EzHold Strip",
+    "name": "EzHold Strip",
+    "description": "Experience the next level of mounting technology with KLAPiT Super Strip EZHold. Innovative 1\"x1\" tape squares crafted using enhanced nanotechnology for unparalleled strength and convenience. Supports up to 15 lbs total — ideal for mirrors, artwork, and home appliances.",
+    "key_features": [
+      "Superior Holding Power: each strip of 4 squares supports up to 3.3 lbs — ideal for mirrors, artwork, and appliances",
+      "Waterproof and Durable: withstands moisture and humidity for bathroom, kitchen, and outdoor use",
+      "Instant Bonding: pre-cut squares provide immediate adhesion — peel, stick, and secure in seconds",
+      "Transparent Design: clear tape blends invisibly into any surface without visible tape lines",
+      "No-Residue Removal: clean, damage-free removal preserving your walls and surfaces"
+    ],
+    "use_cases": [
+      "Hanging artwork and mirrors",
+      "Kitchen and bathroom mounting",
+      "Arts and crafts",
+      "Outdoor applications",
+      "Home organization"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Stick it. Trust it. KLAPiT."
+  },
+  {
+    "folder": "KSS/Gripzilla Strip",
+    "name": "Gripzilla Strip",
+    "description": "KLAPiT Super Strip GRIPZILLA is a heavy-duty double-sided nano mounting tape with Fiber-Infused Enhanced Nanotechnology. Pre-cut into 1\"x1\" squares, each strip of 4 holds up to 5 lbs — no nails, no residue, no mess. Perfect for home, office, and everything in between.",
+    "key_features": [
+      "Advanced Fiber-Infused Technology: cutting-edge nanotechnology delivers unmatched strength and durability for home decor and office setups",
+      "Hassle-Free Installation: pre-cut squares go on any corner instantly — secure, mess-free mounting on wood, metal, glass, and more",
+      "Heavy-Duty Weight Support: each strip of 4 squares holds up to 5 lbs — ideal for pictures, furniture, and kitchen accessories without nails or screws",
+      "Versatile Multi-Surface Use: reliable hold on stone, tile, glass, carpet, and more — a must-have for every toolkit",
+      "Damage-Free Removal: leaves zero residue on surfaces, making repositioning and removal completely clean and easy"
+    ],
+    "use_cases": [
+      "Hanging pictures and artwork",
+      "Securing furniture and carpets",
+      "Home and office organization",
+      "Arts, crafts, and DIY projects",
+      "Indoor and outdoor mounting"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Pre-cut. Press. Done."
+  },
+  {
+    "folder": "KST/Tough/Tough1m",
+    "name": "Klapit Super Tape Tough 1m",
+    "description": "KLAPiT Super Tape Tough (1m/40in) is a clear, heavy-duty double-sided adhesive tape using Enhanced Nano Technology. Holds up to 90 lbs (2.28 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
+    "key_features": [
+      "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 90 lbs — surpassing most adhesives in its class",
+      "Versatile Application: adheres to plastic, metal, wood, glass, stone, and more — ideal for frames, carpets, kitchen tools, and office items",
+      "Weatherproof & Waterproof: maintains strong bond from -10°C to 80°C, suitable for both indoor and outdoor use",
+      "No Residue, Clean Removal: carbon nanotube technology enables traceless, damage-free peel-off at 180 degrees",
+      "Easy-To-Use Packaging: reusable clamshell case with built-in 10cm scale for easy measuring and cutting"
+    ],
+    "use_cases": [
+      "Hanging frames and artwork",
+      "Securing carpets and rugs",
+      "Mounting kitchen and office tools",
+      "Outdoor and weatherproof applications",
+      "Heavy-duty home and office mounting"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Tough tape. Clean removal. Zero compromise."
+  },
+  {
+    "folder": "KST/Tough/Tough3m",
+    "name": "Klapit Super Tape Tough 3m",
+    "description": "KLAPiT Super Tape Tough (3m/118in) is a clear, heavy-duty double-sided adhesive tape using Enhanced Nano Technology. Holds up to 270 lbs/123 kg (2.28 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
+    "key_features": [
+      "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 270 lbs/123 kg — surpassing most adhesives in its class",
+      "Versatile Application: adheres to plastic, metal, wood, glass, stone, and more — ideal for frames, carpets, kitchen tools, and office items",
+      "Weatherproof & Waterproof: maintains strong bond from -10°C to 80°C, suitable for both indoor and outdoor use",
+      "No Residue, Clean Removal: carbon nanotube technology enables traceless, damage-free peel-off at 180 degrees",
+      "Easy-To-Use Packaging: reusable clamshell case with built-in 10cm scale for easy measuring and cutting"
+    ],
+    "use_cases": [
+      "Hanging frames and artwork",
+      "Securing carpets and rugs",
+      "Mounting kitchen and office tools",
+      "Outdoor and weatherproof applications",
+      "Large-scale heavy-duty mounting projects"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "3 meters of unstoppable hold."
+  },
+  {
+    "folder": "KST/Tough/Tough5m",
+    "name": "Klapit Super Tape Tough 5m",
+    "description": "KLAPiT Super Tape Tough (5m/196in) is a clear, heavy-duty double-sided adhesive tape using Enhanced Nano Technology. Holds up to 450 lbs (2.28 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
+    "key_features": [
+      "Exceptional Holding Power: supports up to 450 lbs with advanced Nanotechnology — perfect for the heaviest items without nails or screws",
+      "Weatherproof & Waterproof: reliable in extreme conditions from -10°C to 80°C, ensuring a durable bond indoors and outdoors",
+      "Versatile Mounting Solutions: ideal for kitchen tools, bathroom accessories, wall decor, and carpets on wood, glass, metal, and more",
+      "No Residue, Clean Removal: carbon nanotube technology enables traceless, damage-free peel-off at 180 degrees",
+      "Easy-To-Use Packaging: reusable clamshell case with built-in 10cm scale for easy measuring and cutting"
+    ],
+    "use_cases": [
+      "Mounting heavy kitchen and bathroom accessories",
+      "Hanging wall decor and large frames",
+      "Securing carpets and rugs",
+      "Outdoor and weatherproof applications",
+      "Large-scale heavy-duty mounting projects"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "5 meters. 450 lbs. Nothing moves."
+  },
+  {
+    "folder": "KST/Slim/Slim1m",
+    "name": "Klapit Super Tape Slim 1m",
+    "description": "KLAPiT Super Tape Slim (1m/40in) is a clear, slim-profile double-sided adhesive tape using Enhanced Nano Technology. Holds up to 50 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
+    "key_features": [
+      "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 50 lbs — ideal for lighter precision mounting tasks",
+      "Versatile Application: adheres to plastic, metal, wood, glass, stone, and more — ideal for frames, carpets, kitchen tools, and office items",
+      "Weatherproof & Waterproof: maintains strong bond from -10°C to 80°C, suitable for both indoor and outdoor use",
+      "No Residue, Clean Removal: carbon nanotube technology enables traceless, damage-free peel-off at 180 degrees",
+      "Easy-To-Use Packaging: reusable clamshell case with built-in 10cm scale for easy measuring and cutting"
+    ],
+    "use_cases": [
+      "Hanging lightweight frames and artwork",
+      "Precision mounting on delicate surfaces",
+      "Home and office organization",
+      "Indoor and outdoor applications",
+      "Arts, crafts, and DIY projects"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Slim profile. Strong hold."
+  },
+  {
+    "folder": "KST/Slim/Slim3m",
+    "name": "Klapit Super Tape Slim 3m",
+    "description": "KLAPiT Super Tape Slim (3m/118in) is a clear, slim-profile double-sided adhesive tape using Enhanced Nano Technology. Holds up to 150 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Ideal for frames, carpets, doormats, power cords, and kitchen tools.",
+    "key_features": [
+      "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 150 lbs — perfect for frames, carpets, doormats, and kitchen tools",
+      "Versatile Application: adheres to plastic, metal, wood, glass, stone, and more — ideal for home and office mounting needs",
+      "Weatherproof & Waterproof: maintains strong bond from -10°C to 80°C, suitable for both indoor and outdoor use",
+      "No Residue, Clean Removal: carbon nanotube technology enables traceless, damage-free peel-off at 180 degrees",
+      "Easy-To-Use Packaging: reusable clamshell case with built-in 10cm scale for easy measuring and cutting"
+    ],
+    "use_cases": [
+      "Hanging frames and artwork",
+      "Securing carpets, doormats, and rugs",
+      "Mounting power cords and kitchen tools",
+      "Indoor and outdoor applications",
+      "Home and office organization"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Slim. Strong. Seamless."
+  },
+  {
+    "folder": "KST/Slim/Slim7m",
+    "name": "Klapit Super Tape Slim 7m",
+    "description": "KLAPiT Super Tape Slim (7m/276in) is a clear, slim-profile double-sided adhesive tape using Enhanced Nano Technology. Holds up to 350 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
+    "key_features": [
+      "Extreme Hold: supports up to 350 lbs with enhanced nanotechnology for a reliable, super-strong bond across long runs",
+      "Weatherproof & Waterproof: withstands extreme temperatures from -10°C to 80°C for a durable bond in any weather condition",
+      "Versatile Application: ideal for photo frames, rugs, kitchen tools, and more on wood, glass, metal, and other surfaces",
+      "No Residue, Clean Removal: carbon nanotube technology enables traceless, damage-free peel-off at 180 degrees",
+      "Easy-To-Use Packaging: reusable clamshell case with built-in 10cm scale for easy measuring and cutting"
+    ],
+    "use_cases": [
+      "Mounting photo frames and wall decor",
+      "Securing rugs and doormats",
+      "Mounting kitchen and office tools",
+      "Outdoor and weatherproof applications",
+      "Large-scale home and office projects"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "7 meters of extreme hold."
+  },
+  {
+    "folder": "KST/Slim/Slim10m",
+    "name": "Klapit Super Tape Slim 10m",
+    "description": "KLAPiT Super Tape Slim (10m/394in) is a clear, slim-profile double-sided nano mounting tape using Enhanced Nano Technology. Holds up to 500 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
+    "key_features": [
+      "Extreme Hold: supports up to 500 lbs with enhanced nanotechnology — the maximum hold in the Slim range for the biggest projects",
+      "Weatherproof & Waterproof: withstands extreme temperatures from -10°C to 80°C for a durable bond in any weather condition",
+      "Versatile Application: ideal for photo frames, rugs, kitchen tools, and more on wood, glass, metal, and other surfaces",
+      "No Residue, Clean Removal: carbon nanotube technology enables traceless, damage-free peel-off at 180 degrees",
+      "Easy-To-Use Packaging: reusable clamshell case with built-in 10cm scale for easy measuring and cutting"
+    ],
+    "use_cases": [
+      "Mounting photo frames and wall decor",
+      "Securing rugs and doormats",
+      "Mounting kitchen and office tools",
+      "Outdoor and weatherproof applications",
+      "Professional and large-scale mounting projects"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "10 meters. 500 lbs. Built to last."
+  },
+  {
+    "folder": "KSH/Silver",
+    "name": "Klapit Super Hooks Silver",
+    "description": "KLAPiT Super Hook Silver is a heavy-duty adhesive wall hook made of premium stainless steel. Supports up to 11 lbs per hook, sticks instantly to tile, wood, stone, metal, and glass — no drilling needed. Waterproof, rustproof, and removes cleanly without residue. Pack of 4 reusable hooks.",
+    "key_features": [
+      "Ultra-Strong Hold: premium stainless steel hook supports up to 11 lbs (5 kg) — ideal for towels, coats, backpacks, and more in a compact 2.4\"x2.4\" size",
+      "Instant Use Technology: Enhanced Nanotechnology adhesive — peel, stick, and hang immediately with no wait time",
+      "Versatile Indoor & Outdoor Application: attaches securely to tile, wood, stone, glass, and metal — all-weather and waterproof",
+      "Waterproof and Rustproof: maintains a strong hold in wet conditions — reliable for bathroom, kitchen, and outdoor use",
+      "No-Mess Removal: built-in KNOB for clean, residue-free peel-off — perfect for renters and frequent redecorators"
+    ],
+    "use_cases": [
+      "Hanging towels and coats",
+      "Kitchen and bathroom organization",
+      "Outdoor and all-weather use",
+      "Office and bedroom organization",
+      "Damage-free rental decorating"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Peel. Stick. Hang. Done."
+  },
+  {
+    "folder": "KSH/Clear",
+    "name": "Klapit Super Hooks Clear",
+    "description": "KLAPiT Super Hook Clear is a heavy-duty adhesive wall hook with a discreet, transparent design. Supports up to 11 lbs per hook, sticks instantly to tile, wood, stone, metal, and glass — no drilling needed. Waterproof, rustproof, and removes cleanly without residue. Pack of 4 reusable hooks.",
+    "key_features": [
+      "Ultra-Strong Hold: premium stainless steel hook supports up to 11 lbs (5 kg) — ideal for towels, coats, backpacks, and more in a compact 2.4\"x2.4\" size",
+      "Instant Use Technology: Enhanced Nanotechnology adhesive — peel, stick, and hang immediately with no wait time",
+      "Versatile Indoor & Outdoor Application: attaches securely to tile, wood, stone, glass, and metal — all-weather and waterproof",
+      "Waterproof and Rustproof: maintains a strong hold in wet conditions — reliable for bathroom, kitchen, and outdoor use",
+      "No-Mess Removal: built-in KNOB for clean, residue-free peel-off — perfect for renters and frequent redecorators"
+    ],
+    "use_cases": [
+      "Hanging towels and coats",
+      "Kitchen and bathroom organization",
+      "Outdoor and all-weather use",
+      "Office and bedroom organization",
+      "Damage-free rental decorating"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Invisible hold. Undeniable strength."
+  },
+  {
+    "folder": "KSH/Gold",
+    "name": "Klapit Super Hooks Gold",
+    "description": "KLAPiT Super Hook Gold is a heavy-duty adhesive wall hook with a premium gold finish that blends elegantly into any decor. Supports up to 11 lbs per hook, sticks instantly to tile, wood, stone, metal, and glass — no drilling needed. Waterproof, rustproof, and removes cleanly without residue. Pack of 4 reusable hooks.",
+    "key_features": [
+      "Ultra-Strong Hold: premium stainless steel hook supports up to 11 lbs (5 kg) — ideal for towels, coats, backpacks, and more in a compact 2.4\"x2.4\" size",
+      "Instant Use Technology: Enhanced Nanotechnology adhesive — peel, stick, and hang immediately with no wait time",
+      "Versatile Indoor & Outdoor Application: attaches securely to tile, wood, stone, glass, and metal — all-weather and waterproof",
+      "Waterproof and Rustproof: maintains a strong hold in wet conditions — reliable for bathroom, kitchen, and outdoor use",
+      "No-Mess Removal: built-in KNOB for clean, residue-free peel-off — perfect for renters and frequent redecorators"
+    ],
+    "use_cases": [
+      "Hanging towels and coats",
+      "Kitchen and bathroom organization",
+      "Outdoor and all-weather use",
+      "Luxury home and office decor",
+      "Damage-free rental decorating"
+    ],
+    "brand_name": "KLAPIT",
+    "tagline": "Gold finish. Iron grip."
   }
 ]
