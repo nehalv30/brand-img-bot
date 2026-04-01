@@ -286,11 +286,12 @@ Lighting: {style["lighting"]}
 ━━━ PRODUCT PACKAGING — CRITICAL ━━━
 The uploaded image IS the real KLAPiT product you must feature. Follow these rules exactly:
 - Copy the packaging with 100% accuracy: exact colors, exact logo placement, exact text on pack, exact shape and proportions
-- The full product must be FULLY VISIBLE in the frame — never partially cropped, never blurred, never distorted
+- The product packaging must occupy at least 30–40% of the total image area — it must be LARGE, PROMINENT, and IMPOSSIBLE TO MISS
+- The full product must be FULLY VISIBLE in the frame — never partially cropped, never blurred, never pushed to a small corner
+- Someone glancing at this post for 1 second must immediately see and read the product — if it looks small or unclear, it is wrong
 - Do NOT add glow effects, halos, adhesive strings, or any embellishments around the product
 - Do NOT change the product color, shape, or add fake labels
-- Position the product as a natural object in the scene: on a counter, shelf, hand-held, or leaning — whatever fits
-- The product must be large enough to read clearly — it is the HERO of the image
+- Position the product as a natural object in the scene: on a counter, shelf, hand-held, or leaning — wherever it is biggest and clearest
 
 ━━━ SCENE ━━━
 {people_note}
