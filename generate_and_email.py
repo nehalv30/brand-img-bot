@@ -250,50 +250,66 @@ for i, (concept, style) in enumerate(posts_today, 1):
     if not angle_image:
         raise ValueError(f"Could not load image: {all_image_paths[(i - 1) % len(all_image_paths)]}")
 
-    people_note = "Include a real person naturally in this scene — hands, partial body, or full lifestyle moment." if style.get("people") else "No people needed — let the product and scene tell the story."
+    people_note = "Include a real person naturally in this scene — hands, partial body, or full lifestyle moment. Keep it authentic, not stock-photo staged." if style.get("people") else "No people. Let the product and the scene be the hero."
 
     prompt = f"""
-You are a world-class creative director creating a premium Instagram post for KLAPiT — a home organization brand making nano-adhesive hooks, tapes, and strips that let people hang and organize anything without drills or nails. Think 3M Command Strips but more modern and premium.
+You are a world-class art director producing a premium, print-quality Instagram square post for KLAPiT — a home organization brand making nano-adhesive hooks, tapes, and strips that let people hang and organize anything without drills or nails. Think Apple-level visual quality meets modern home design.
 
-PRODUCT BEING FEATURED: {name}
+━━━ PRODUCT ━━━
+Name: {name}
 Brand: {brand_name}
 Tagline: {tagline}
-What it does: {description}
+Description: {description}
 Key features: {key_features}
 Best used for: {use_cases}
 
-━━━ POST CONCEPT: {concept["name"]} ━━━
+━━━ TODAY'S CONCEPT: {concept["name"]} ━━━
 {concept["concept"]}
-Text to use: {concept["text"]}
+
+━━━ TYPOGRAPHY — CRITICAL ━━━
+Render this EXACT text in the image (copy letter-by-letter, no changes):
+{concept["text"]}
+
+SPELLING RULES — NON-NEGOTIABLE:
+- Every word must be spelled 100% correctly — proofread as if this goes to print
+- Use ONLY the text provided above — do not invent new words or change any letters
+- Font: bold, clean modern sans-serif (think Helvetica, Futura, or similar)
+- Text placement: intentional — top third, bottom third, or clean negative space area
+- Text color must have HIGH contrast against the background
+- Maximum 3 lines — no more
 
 ━━━ VISUAL STYLE: {style["name"]} ━━━
 {style["style"]}
 Lighting: {style["lighting"]}
 {people_note}
 
-━━━ PRODUCT IMAGE INSTRUCTIONS ━━━
-The uploaded photo IS the real KLAPiT product packaging. You must:
-- Reproduce it with 100% visual accuracy — exact same colors, shape, logo, and design
-- Show it clearly and fully in the frame — NEVER crop, blur, or shrink it to the point it becomes unreadable
-- Place it naturally: on a counter, shelf, corner of the image, or being held — wherever fits the concept
-- The product is the HERO — it should be immediately noticeable when someone sees the post
+━━━ PRODUCT PACKAGING — CRITICAL ━━━
+The uploaded image IS the real KLAPiT product you must feature. Follow these rules exactly:
+- Copy the packaging with 100% accuracy: exact colors, exact logo placement, exact text on pack, exact shape and proportions
+- The full product must be FULLY VISIBLE in the frame — never partially cropped, never blurred, never distorted
+- Do NOT add glow effects, halos, adhesive strings, or any embellishments around the product
+- Do NOT change the product color, shape, or add fake labels
+- Position the product as a natural object in the scene: on a counter, shelf, hand-held, or leaning — whatever fits
+- The product must be large enough to read clearly — it is the HERO of the image
 
-━━━ SCENE & COMPOSITION ━━━
-- Choose a scene that directly matches what this product is used for:
-  Hooks → towels, coats, bags, plants, keys hanging on a wall
-  Tape/Strips → frames hung on wall, rugs secured, kitchen items mounted
-- Make the scene feel like a real home, not a generic stock photo
-- Every prop and element must make sense for this product's use case
-- Cohesive color palette — background, props, text, and product should all feel designed together
+━━━ SCENE ━━━
+{people_note}
+- Build a scene that DIRECTLY relates to what this product does:
+  If it is a hook: show something hanging — a towel, coat, bag, plant, keys — on a clean wall
+  If it is tape or a strip: show a frame mounted on a wall, a rug corner secured, or an item firmly mounted
+- The scene must look like a real, beautiful home — not generic, not stock-photo
+- Minimal props — 2 to 4 items maximum, all intentional
+- Cohesive color palette: background, props, product, and text all feel designed together
+- Avoid clutter, busy patterns, or anything that distracts from the product
 
-━━━ TYPOGRAPHY ━━━
-- Place the text intentionally — top, bottom, or overlaid on a clean area
-- Use bold, clean sans-serif for headlines. Max 3 lines total.
-- Text color must contrast clearly with the background
+━━━ QUALITY BAR ━━━
+- This image will be seen by thousands of people on Instagram. It must look like it was made by a premium agency.
+- Clean. Sharp. Intentional. Premium. Every pixel should feel purposeful.
+- If a detail looks wrong or cheap — fix it before rendering.
 
-━━━ NON-NEGOTIABLE FORMAT RULES ━━━
-- Output must be a PERFECT SQUARE (1:1 ratio) — not portrait, not landscape, exactly square
-- Minimalistic and premium — clean beats busy every time
+━━━ FORMAT — NON-NEGOTIABLE ━━━
+- Output MUST be a PERFECT SQUARE: 1:1 ratio, equal width and height — not portrait, not landscape
+- Minimalistic wins over busy every time
 """
 
     contents = [prompt] + angle_image
