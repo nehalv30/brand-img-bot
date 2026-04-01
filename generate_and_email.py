@@ -16,6 +16,7 @@ load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY")
 EMAIL_FROM = os.getenv("EMAIL_FROM")
 EMAIL_TO = os.getenv("EMAIL_TO")
+EMAIL_CC = "marketing@kosmosmith.com"
 EMAIL_APP_PASSWORD = os.getenv("EMAIL_APP_PASSWORD")
 
 if not API_KEY:
@@ -74,6 +75,7 @@ def send_email_with_attachments(subject: str, body: str, attachment_paths: list[
     msg["Subject"] = subject
     msg["From"] = EMAIL_FROM
     msg["To"] = EMAIL_TO
+    msg["Cc"] = EMAIL_CC
     msg.set_content(body)
 
     for path in attachment_paths:
