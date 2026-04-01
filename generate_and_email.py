@@ -293,15 +293,22 @@ The uploaded image IS the real KLAPiT product you must feature. Follow these rul
 - Do NOT change the product color, shape, or add fake labels
 - Position the product as a natural object in the scene: on a counter, shelf, hand-held, or leaning — wherever it is biggest and clearest
 
-━━━ SCENE ━━━
-{people_note}
-- Build a scene that DIRECTLY relates to what this product does:
-  If it is a hook: show something hanging — a towel, coat, bag, plant, keys — on a clean wall
-  If it is tape or a strip: show a frame mounted on a wall, a rug corner secured, or an item firmly mounted
-- The scene must look like a real, beautiful home — not generic, not stock-photo
-- Minimal props — 2 to 4 items maximum, all intentional
+━━━ SCENE — STRICTLY PRODUCT-SPECIFIC ━━━
+The product is: {name}
+This product is used for: {use_cases}
+
+Build ONLY a scene that shows this exact product being used in one of its real use cases listed above.
+- ONLY include props that are directly relevant to the use cases listed — nothing else
+- Do NOT show hooks, nails, screws, or any other mounting product — this is a {name} ad, not a generic KLAPiT ad
+- Do NOT show bags hanging on hooks if this product is a tape or strip — tape mounts things flat to surfaces
+- Do NOT invent uses that are not listed — stick strictly to what the product actually does
+- Example for tape/strip products: show a picture frame or mirror mounted flush to a wall, or a rug corner being secured
+- Example for hook products: show a hook on a wall with the correct item hanging from it (towel, keys, coat)
+- Example for magnetic strips: show two items magnetically connected or a frame mounted without nails
+- The scene must look like a real, beautiful, styled home — minimal, clean, intentional
+- 2 to 4 props maximum — every single prop must make sense for THIS product's purpose
 - Cohesive color palette: background, props, product, and text all feel designed together
-- Avoid clutter, busy patterns, or anything that distracts from the product
+{people_note}
 
 ━━━ QUALITY BAR ━━━
 - This image will be seen by thousands of people on Instagram. It must look like it was made by a premium agency.
