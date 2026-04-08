@@ -341,14 +341,22 @@ The image uploaded IS the real KLAPiT product packaging. Reproduce it exactly:
 - No halos, glow effects, fake labels, adhesive strings, or any embellishments
 - The product must be legible to someone who has never seen it before
 
+━━━ HOW THIS PRODUCT WORKS — READ BEFORE BUILDING THE SCENE ━━━
+This product is: {name}
+
+CRITICAL — understand the product before drawing it:
+- If this is a TAPE or STRIP (double-sided nano tape): the tape goes BETWEEN two surfaces and is completely HIDDEN once applied. You NEVER see the tape in the final result. The scene shows the result only — a frame or mirror mounted cleanly flush against a wall, a rug corner lying flat and secured, a poster held perfectly level. No tape is visible. No strips hanging off things. No tape wrapped around edges. The tape is invisible by design.
+- If this is a HOOK: the hook body attaches to the wall via the adhesive backing. What hangs FROM the hook (towel, coat, keys, plant) dangles below or beside the hook naturally. The hook itself is visible on the wall. Nothing is wrapped in tape.
+- If this is a MAGNETIC STRIP: two small magnetic pads sit flush on two surfaces, connecting them invisibly. The result looks clean and drill-free.
+
 ━━━ SCENE — SPECIFIC TO THIS PRODUCT ONLY ━━━
 This is an ad for: {name}
 This product's real uses are: {use_cases}
 
-Build a scene ONLY around those real uses. Do not invent uses. Do not mix up product types:
-- If this is a tape or strip: the scene shows something mounted FLAT to a surface — a frame on a wall, a rug corner held down, a poster secured
-- If this is a hook: the scene shows the hook on a wall with the correct item hanging from it — a towel, coat, keys, or plant
-- If this is a magnetic strip: the scene shows two surfaces connected magnetically, or a frame mounted perfectly without nails
+Build a scene ONLY around those real uses:
+- Show the RESULT of using this product — the beautifully mounted frame, the perfectly hanging towel, the secured rug — not the process of applying tape
+- NEVER show tape strips, adhesive strings, or any mounting material visibly attached to, draped over, or hanging from any object in the scene
+- The product PACKAGING is shown separately as a standalone element (propped on a shelf, placed on a surface beside the scene, or as its own product shot panel)
 - Props: maximum 3, all relevant, all intentional — no random objects
 - The scene must feel like a real, aspirational home — not stock, not generic
 
