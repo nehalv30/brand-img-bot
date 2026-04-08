@@ -110,97 +110,146 @@ def generate_image(contents, max_retries=10, retry_delay=30):
                 raise
 
 
-# Visual styles — varied moods, all clean and Instagram-ready
+# Visual styles — wide range of Instagram aesthetics
 VISUAL_STYLES = [
     {
         "name": "Bright & Airy",
-        "style": "bright white or off-white background, lots of natural light, clean and fresh feel, light wood or marble accents, minimal props",
-        "lighting": "soft natural daylight, even and bright, no harsh shadows",
+        "style": "bright white or off-white background, clean and fresh, light wood or marble accents, minimal props — feels like a Pinterest dream home",
+        "lighting": "soft diffused natural daylight, even and bright, no harsh shadows",
         "people": False,
     },
     {
-        "name": "Warm Home",
-        "style": "warm cream or beige tones, cozy home setting, natural textures like linen, wood, or stone, lived-in but styled",
-        "lighting": "warm golden side light, soft shadows",
+        "name": "Warm & Cozy Home",
+        "style": "warm cream or terracotta tones, natural textures — linen, wood, rattan, stone — lived-in but beautifully styled, like a real home you want to live in",
+        "lighting": "warm golden side light, soft organic shadows",
         "people": False,
     },
     {
-        "name": "Dark & Premium",
-        "style": "deep charcoal or slate background, high contrast, gold or white typography, editorial and premium feel",
-        "lighting": "single directional spotlight, dramatic but controlled",
+        "name": "Dark & Luxury",
+        "style": "deep charcoal, slate, or navy background, high contrast, gold or white typography, moody and editorial — feels like a premium brand campaign",
+        "lighting": "single directional spotlight, dramatic but controlled shadows",
         "people": False,
     },
     {
-        "name": "Real Person Lifestyle",
-        "style": "a real person (hands or full body) naturally interacting with the product or enjoying the result — hanging something, organizing their space, or simply living in a well-organized home",
-        "lighting": "natural indoor light, realistic and warm",
+        "name": "Real Person Moment",
+        "style": "a real person naturally in the scene — hands pressing product to a wall, holding an item just hung, or enjoying a beautifully organized space. Feels candid and authentic, not posed.",
+        "lighting": "natural warm indoor light, realistic and human",
         "people": True,
     },
     {
-        "name": "Clean Studio",
-        "style": "pure white background, product as hero, soft shadow, absolutely minimal — like a premium product catalogue",
-        "lighting": "soft studio light from above, gentle and even",
+        "name": "Studio Product Hero",
+        "style": "pure white or soft grey background, product is the only focus, long clean shadow beneath it — like an Apple product launch image",
+        "lighting": "soft studio light from slightly above, perfectly even",
         "people": False,
     },
     {
-        "name": "Lifestyle Scene",
-        "style": "a beautifully styled real room — bathroom, entryway, kitchen, or living room — product shown in context, aspirational but achievable",
-        "lighting": "natural window light, warm and realistic",
+        "name": "Aspirational Lifestyle Room",
+        "style": "a full beautifully styled room — modern entryway, Scandinavian bathroom, minimal living room — product integrated naturally. Aspirational but achievable.",
+        "lighting": "soft natural window light streaming in, warm and real",
+        "people": False,
+    },
+    {
+        "name": "Bold Color Block",
+        "style": "one strong solid background color (dusty green, terracotta, cobalt, blush) — product pops against it, very graphic and design-forward, feels like a modern brand poster",
+        "lighting": "flat even light, no shadows, graphic and clean",
+        "people": False,
+    },
+    {
+        "name": "Flat Lay Overhead",
+        "style": "top-down flat lay view — product surrounded by 3-4 carefully chosen lifestyle items arranged with intentional white space on a clean surface (marble, wood, linen). Like a styled magazine spread shot from above.",
+        "lighting": "bright overhead natural light, minimal shadows",
+        "people": False,
+    },
+    {
+        "name": "Golden Hour Glow",
+        "style": "warm amber and honey tones, late-afternoon sunlight feel, shadows are long and golden, scene feels warm, inviting, and slightly cinematic",
+        "lighting": "warm directional golden hour light from the side, rich and glowing",
+        "people": False,
+    },
+    {
+        "name": "Monochrome Minimal",
+        "style": "single color family — all whites, all neutrals, all greys — product is the only element with contrast or color. Extremely clean, calm, and premium.",
+        "lighting": "soft diffused light, almost shadowless, serene",
         "people": False,
     },
 ]
 
-# Post concepts — what story each post tells
+# Post concepts — wide range of Instagram content formats and storytelling angles
 POST_CONCEPTS = [
     {
-        "name": "Problem Solver",
-        "concept": "Show the contrast between the old painful way (drills, nails, wall damage, mess) and the clean KLAPiT solution. Could be a split image or a single scene that implies the solution. Make the viewer think 'why didn't I know about this sooner?'",
-        "text": "Bold headline like 'No drills. No damage. No stress.' or 'There's a smarter way to hang things.'",
+        "name": "POV Scroll-Stopper",
+        "concept": "First-person POV format — the viewer IS the person in the scene. Frame it as a relatable moment: 'POV: You're moving into a new apartment and just discovered you never need to drill again.' The visual shows exactly what they would see. Bold, direct, scroll-stopping.",
+        "text": "POV: [relatable situation specific to this product]. Make it 1-2 punchy lines that make someone stop scrolling.",
     },
     {
-        "name": "Strength Stat",
-        "concept": "Lead with a powerful number — the holding strength of the product. Show something impressively heavy hanging confidently on a wall (a coat, backpack, framed mirror, plant). The stat is the headline, the scene proves it.",
-        "text": "Huge bold stat (e.g. '11 LBS', '60 LBS', '500 LBS') as headline, supporting line like 'One strip. Serious hold.'",
+        "name": "Strength Stat Shock",
+        "concept": "Lead with a jaw-dropping number — the product's weight capacity. Make it feel like a world record. Show something impressively heavy hanging confidently (a framed mirror, a coat, a bag) and let the stat do the talking. The visual PROVES the stat.",
+        "text": "Giant bold number (the actual weight limit from product features) dominates the image. One line below like 'One strip. Serious hold.' — short and powerful.",
     },
     {
-        "name": "Room Transform",
-        "concept": "An aspirational, beautifully organized space — gallery wall, styled bathroom, neat entryway — that looks achievable. The product made this possible. Could include a person admiring or enjoying the space.",
-        "text": "Soft headline like 'Your walls. Your style.' or 'This is what no-drill hanging looks like.'",
+        "name": "Renter's Anthem",
+        "concept": "Speak directly to renters — the #1 audience for this product. The visual should feel like the sigh of relief every renter feels when they find a damage-free solution. Could be a beautiful styled wall with the product, or someone confidently hanging something without a care.",
+        "text": "Direct renter callout: 'Renters, this one's for you.' or 'No deposit lost. No holes. Just vibes.' — conversational and real.",
     },
     {
-        "name": "The Clever Use",
-        "concept": "Show one specific, creative, relatable use case that surprises or delights — hooks holding a hanging plant, tape securing a doormat, strips organizing cables, magnetic strips holding remotes. Make it feel like a discovery.",
-        "text": "Headline like 'Hang your plants. Not your worries.' or 'The hack your home needs.' — specific to the use case shown",
+        "name": "The Satisfying Detail",
+        "concept": "A close-up, satisfying shot focused on one specific detail — the product being pressed onto a clean tile, a hook holding a plant perfectly level, tape running cleanly along a rug edge. No wide shot needed. Make it feel ASMR-level satisfying.",
+        "text": "Minimal text — just a short punchy line like 'Clean hold. Every time.' or 'This is what secure looks like.' placed simply in a corner.",
     },
     {
-        "name": "In Action",
-        "concept": "Show a person using the product naturally — pressing a hook onto a tile wall, hanging a frame, sticking tape to secure a rug edge. The moment should feel real and satisfying, not staged. Show the product clearly and the result visible in the same frame.",
-        "text": "Action headline like 'Peel. Stick. Done.' or 'Instant hold. Zero tools.' — short and punchy",
+        "name": "The Quiet Upgrade",
+        "concept": "Subtle aspirational content — 'quiet luxury' aesthetic. No loud claims. Just a beautifully styled space that looks incredible, and the KLAPiT product is simply part of it, doing its job invisibly. The vibe says: people with taste use this.",
+        "text": "Ultra-minimal text. Just the product name or tagline in an elegant font. Let the image speak.",
     },
     {
-        "name": "Feature Hero",
-        "concept": "Pick one standout feature of this specific product and build the entire visual around it. Waterproof = bathroom with water splashing nearby. Residue-free = a clean wall after removing a hook. Reusable = someone repositioning a frame effortlessly.",
-        "text": "Feature as the headline (e.g. 'Waterproof.' / 'Zero residue.' / 'Reuse it.'), one short explanation line below",
+        "name": "Did You Know",
+        "concept": "Educational hook format. Lead with a surprising fact about the product or the problem it solves — most people don't know their walls can hold this much, or that nano-tape is reusable. Make it feel like a discovery the viewer wants to share.",
+        "text": "Start with 'Did you know...' or 'Most people don't realize...' — finish with the surprising fact about this product's key feature.",
     },
     {
-        "name": "Before vs After",
-        "concept": "A clean two-panel split: before shows a cluttered, bare, or nail-damaged wall; after shows the same wall beautifully organized using KLAPiT. Both panels should look photographic and real, not illustrated.",
-        "text": "Clean 'Before' / 'After' labels, bold tagline at the bottom like 'PEEL. STICK. HANG. DONE.'",
+        "name": "The One Feature",
+        "concept": "Dedicate the entire post to ONE standout feature of this specific product. Make that single feature feel extraordinary. Waterproof = show it in a steamy bathroom. Residue-free = pristine clean wall after removal. Reusable = effortless repositioning. One feature. Full commitment.",
+        "text": "The feature as a bold one-word or two-word headline ('Waterproof.' / 'Zero Residue.' / 'Holds 60 LBS.'). One clean supporting sentence.",
     },
     {
-        "name": "Relatable Moment",
-        "concept": "A warm, human scene that feels instantly relatable — someone moving into a new apartment, a parent organizing kids' room, a person finally tackling that bare wall. The product is the simple, satisfying answer.",
-        "text": "Conversational headline like 'Moving in? Skip the nails.' or 'Finally, a wall you're proud of.' — warm and human",
+        "name": "Before / After Split",
+        "concept": "Clean two-panel split composition: LEFT shows the 'before' — a bare boring wall, a messy unorganized corner, or a nail-damaged surface. RIGHT shows the exact same space transformed with KLAPiT — styled, beautiful, organized. Both panels must look photographic and real.",
+        "text": "'Before' label on the left panel. 'After' label on the right. Bold tagline centered at the bottom of the image: 'PEEL. STICK. DONE.'",
     },
     {
-        "name": "Clean Product Hero",
-        "concept": "The product packaging is the star — centered, well-lit, styled with 2-3 minimal lifestyle props that match its use case (a folded towel, a small plant, a marble surface). Clean and premium like a luxury brand.",
-        "text": "Brand name as the headline, tagline below — minimal and confident",
+        "name": "Aesthetic Flat Lay",
+        "concept": "A beautifully styled overhead flat lay — product packaging at the center, surrounded by 3-4 items that represent its world (a folded towel, small plant, set of keys, a frame). Every element placed with intention, lots of clean space. Feels like a lifestyle brand lookbook.",
+        "text": "Product tagline placed cleanly below the arrangement. Minimal, confident — like a luxury product reveal.",
     },
     {
-        "name": "Social Proof Feel",
-        "concept": "A warm, authentic-looking scene that feels like something a happy customer would post — a beautifully hung gallery wall, an organized bathroom, a cozy entryway. Genuine and aspirational at the same time.",
-        "text": "Headline like 'This is why we don't drill anymore.' or 'Every home needs this.' — conversational and real",
+        "name": "Bold Typographic Poster",
+        "concept": "Typography IS the art. Giant, impactful text takes up most of the image — one punchy headline in huge bold letters. The product is placed small but clearly visible as a supporting element. Feels like a modern editorial poster or campaign billboard.",
+        "text": "One powerful 3-5 word headline in massive bold type. Examples: 'NO NAILS. NO LIMITS.' / 'HANG ANYTHING. DAMAGE NOTHING.' / 'YOUR WALLS. REIMAGINED.' — all caps, bold, impactful.",
+    },
+    {
+        "name": "Room Glow-Up",
+        "concept": "Aspirational room transformation — show a specific room (entryway, bedroom, bathroom, kitchen) at its most beautiful, with the product clearly responsible for one or more organized elements. Make the viewer think 'I want my home to look like this.'",
+        "text": "Soft aspirational headline like 'This is your home on KLAPiT.' or 'Small product. Big glow-up.' — warm and inspiring.",
+    },
+    {
+        "name": "The Hack You Need",
+        "concept": "Position this as the ultimate home hack — one clever, specific use case that makes someone think 'why didn't I think of that?' Show the product solving a very specific real-life scenario relevant to its use cases. Feels like a viral life hack post.",
+        "text": "Headline format: 'The [adjective] hack your [location] needs.' e.g. 'The bathroom hack you didn't know existed.' or 'The home office upgrade nobody told you about.'",
+    },
+    {
+        "name": "Human Connection",
+        "concept": "Warm, emotional storytelling — someone moving into their first apartment, a couple styling their new home, a parent organizing a child's room. The product is the simple, joyful answer to a real human moment. Authentic, warm, relatable.",
+        "text": "Conversational first-person tone: 'Moving in? Leave the drill behind.' or 'We organized our whole entryway in 20 minutes.' — feels like a real person wrote it.",
+    },
+    {
+        "name": "Minimal Product Drop",
+        "concept": "Product-only focus — clean, confident, premium. Product packaging centered or off-center with dramatic negative space around it. A few perfectly chosen lifestyle props. Feels like a product launch announcement or a luxury brand's 'new drop' post.",
+        "text": "Brand name bold at top, tagline at bottom. Nothing else. Silence can be powerful.",
+    },
+    {
+        "name": "The Comparison Flex",
+        "concept": "Side-by-side or implied comparison: traditional method (drill, nail, damage) vs. KLAPiT. Make the KLAPiT side obviously better — cleaner, easier, more beautiful. Not a messy infographic — a clean, beautiful visual comparison. KLAPiT always wins.",
+        "text": "Simple comparison labels. Bold conclusion at the bottom: 'We're not the same.' or 'There's no competition.' — confident and witty.",
     },
 ]
 
@@ -253,71 +302,62 @@ for i, (concept, style) in enumerate(posts_today, 1):
     people_note = "Include a real person naturally in this scene — hands, partial body, or full lifestyle moment. Keep it authentic, not stock-photo staged." if style.get("people") else "No people. Let the product and the scene be the hero."
 
     prompt = f"""
-You are a world-class art director producing a premium, print-quality Instagram square post for KLAPiT — a home organization brand making nano-adhesive hooks, tapes, and strips that let people hang and organize anything without drills or nails. Think Apple-level visual quality meets modern home design.
+You are a senior creative director at a top-tier Instagram marketing agency. You are producing one scroll-stopping, premium square post for KLAPiT — a modern home organization brand. KLAPiT makes nano-adhesive hooks, tapes, and strips so people can hang and organize anything without drilling. Their target audience: renters, home decor lovers, minimalists, people aged 25–40 who care about how their home looks.
 
-━━━ PRODUCT ━━━
+━━━ THE PRODUCT ━━━
 Name: {name}
 Brand: {brand_name}
 Tagline: {tagline}
-Description: {description}
+What it does: {description}
 Key features: {key_features}
-Best used for: {use_cases}
+Real use cases: {use_cases}
 
-━━━ TODAY'S CONCEPT: {concept["name"]} ━━━
-{concept["concept"]}
+━━━ TODAY'S CREATIVE BRIEF ━━━
+Format: {concept["name"]}
+Direction: {concept["concept"]}
 
-━━━ TYPOGRAPHY — CRITICAL ━━━
-Render this EXACT text in the image (copy letter-by-letter, no changes):
+━━━ TEXT TO RENDER IN THE IMAGE ━━━
+Use this as your creative direction for the copy — write the actual text in the style described:
 {concept["text"]}
 
-SPELLING RULES — NON-NEGOTIABLE:
-- Every word must be spelled 100% correctly — proofread as if this goes to print
-- Use ONLY the text provided above — do not invent new words or change any letters
-- Font: bold, clean modern sans-serif (think Helvetica, Futura, or similar)
-- Text placement: intentional — top third, bottom third, or clean negative space area
-- Text color must have HIGH contrast against the background
-- Maximum 3 lines — no more
+SPELLING — ZERO TOLERANCE:
+- Every single word rendered in the image must be spelled perfectly
+- Read each word letter by letter before finalizing
+- Clean modern sans-serif typography only (Helvetica / Futura style)
+- Maximum 3 lines of text total
+- High contrast between text and background — must be readable at a glance
 
-━━━ VISUAL STYLE: {style["name"]} ━━━
+━━━ VISUAL STYLE ━━━
+Aesthetic: {style["name"]}
 {style["style"]}
 Lighting: {style["lighting"]}
 {people_note}
 
-━━━ PRODUCT PACKAGING — CRITICAL ━━━
-The uploaded image IS the real KLAPiT product you must feature. Follow these rules exactly:
-- Copy the packaging with 100% accuracy: exact colors, exact logo placement, exact text on pack, exact shape and proportions
-- The product packaging must occupy at least 30–40% of the total image area — it must be LARGE, PROMINENT, and IMPOSSIBLE TO MISS
-- The full product must be FULLY VISIBLE in the frame — never partially cropped, never blurred, never pushed to a small corner
-- Someone glancing at this post for 1 second must immediately see and read the product — if it looks small or unclear, it is wrong
-- Do NOT add glow effects, halos, adhesive strings, or any embellishments around the product
-- Do NOT change the product color, shape, or add fake labels
-- Position the product as a natural object in the scene: on a counter, shelf, hand-held, or leaning — wherever it is biggest and clearest
+━━━ PRODUCT — THE MOST IMPORTANT ELEMENT ━━━
+The image uploaded IS the real KLAPiT product packaging. Reproduce it exactly:
+- Match the packaging 100%: colors, logo, text on pack, proportions, shape — zero creative liberty here
+- Product must fill at least 30–40% of the image — large, clear, undeniable
+- Entire product fully in frame — never crop, shrink, or blur it
+- No halos, glow effects, fake labels, adhesive strings, or any embellishments
+- The product must be legible to someone who has never seen it before
 
-━━━ SCENE — STRICTLY PRODUCT-SPECIFIC ━━━
-The product is: {name}
-This product is used for: {use_cases}
+━━━ SCENE — SPECIFIC TO THIS PRODUCT ONLY ━━━
+This is an ad for: {name}
+This product's real uses are: {use_cases}
 
-Build ONLY a scene that shows this exact product being used in one of its real use cases listed above.
-- ONLY include props that are directly relevant to the use cases listed — nothing else
-- Do NOT show hooks, nails, screws, or any other mounting product — this is a {name} ad, not a generic KLAPiT ad
-- Do NOT show bags hanging on hooks if this product is a tape or strip — tape mounts things flat to surfaces
-- Do NOT invent uses that are not listed — stick strictly to what the product actually does
-- Example for tape/strip products: show a picture frame or mirror mounted flush to a wall, or a rug corner being secured
-- Example for hook products: show a hook on a wall with the correct item hanging from it (towel, keys, coat)
-- Example for magnetic strips: show two items magnetically connected or a frame mounted without nails
-- The scene must look like a real, beautiful, styled home — minimal, clean, intentional
-- 2 to 4 props maximum — every single prop must make sense for THIS product's purpose
-- Cohesive color palette: background, props, product, and text all feel designed together
-{people_note}
+Build a scene ONLY around those real uses. Do not invent uses. Do not mix up product types:
+- If this is a tape or strip: the scene shows something mounted FLAT to a surface — a frame on a wall, a rug corner held down, a poster secured
+- If this is a hook: the scene shows the hook on a wall with the correct item hanging from it — a towel, coat, keys, or plant
+- If this is a magnetic strip: the scene shows two surfaces connected magnetically, or a frame mounted perfectly without nails
+- Props: maximum 3, all relevant, all intentional — no random objects
+- The scene must feel like a real, aspirational home — not stock, not generic
 
-━━━ QUALITY BAR ━━━
-- This image will be seen by thousands of people on Instagram. It must look like it was made by a premium agency.
-- Clean. Sharp. Intentional. Premium. Every pixel should feel purposeful.
-- If a detail looks wrong or cheap — fix it before rendering.
+━━━ CREATIVE FREEDOM ━━━
+You have full creative freedom within this brief. Choose the layout, color palette, prop placement, and typographic hierarchy that makes this post stand out in a crowded Instagram feed. Be bold. Be smart. Make it look like it was made by a world-class agency — because it was.
 
-━━━ FORMAT — NON-NEGOTIABLE ━━━
-- Output MUST be a PERFECT SQUARE: 1:1 ratio, equal width and height — not portrait, not landscape
-- Minimalistic wins over busy every time
+━━━ NON-NEGOTIABLE ━━━
+- PERFECT SQUARE output: 1:1 ratio — not portrait, not landscape
+- Premium, clean, intentional — every element earns its place
 """
 
     contents = [prompt] + angle_image
