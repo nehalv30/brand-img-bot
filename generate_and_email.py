@@ -406,22 +406,33 @@ for i, (angle, mood, copy) in enumerate(zip(angles_today, moods_today, copies_to
     if not ref_image:
         raise ValueError("Could not load reference image")
 
+    visual_description = product.get("visual_description", product_type)
+
     prompt = f"""Create a premium Instagram square photo (1:1 ratio) for a home organization product.
 
-PRODUCT: {name}. It is a {product_type}
+PRODUCT: {name}
+WHAT IT LOOKS LIKE (match this exactly): {visual_description}
 USE CASES: {use_cases}
+
+The uploaded image shows the real product — study it carefully and reproduce the physical product's exact appearance, color, shape, and size in the scene.
 
 TODAY'S CREATIVE ANGLE: "{angle}"
 VISUAL MOOD: {mood}
 
-Using the uploaded product image as a reference for what the physical product looks like, invent a unique, specific, beautiful scene that captures this creative angle with this product. Be creative — don't default to generic. The scene should feel fresh, real, and deeply relatable to someone who rents or cares about their home.
+Invent a specific, beautiful, realistic scene around this angle. Be creative and fresh.
 
-Show the actual physical product ({product_type}) naturally in use within the scene. No retail packaging. No brand names or logos anywhere.
+CRITICAL REALISM RULES — the image must make physical sense:
+- Tape and strips are DOUBLE-SIDED — they go on the BACK of an object between it and the wall. You NEVER see tape on the front face or top edge of a frame. If showing tape being applied, show it being pressed to the back of the frame or the wall surface.
+- Hooks are mounted FLAT on the wall surface — items hang DOWN from the hook naturally by gravity. A bag hangs from a hook by its strap, a towel drapes over it, a plant pot hangs by a cord from it.
+- Magnetic pads sit at the CORNERS behind a frame — they are not visible from the front, only as slim squares at the frame edge.
+- Ask yourself: "Does this look physically possible in real life?" If not, fix it.
 
-Add this text as a bold white overlay (Helvetica style, top-left or bottom-left of image):
+No retail packaging. No brand names or logos anywhere in the image.
+
+Text overlay — bold white sans-serif, top-left or bottom-left corner:
 {copy}
 
-Perfect 1:1 square. Magazine quality. Eye-catching."""
+Perfect 1:1 square. Magazine quality."""
 
     contents = [prompt] + ref_image
     response = generate_image(contents)
