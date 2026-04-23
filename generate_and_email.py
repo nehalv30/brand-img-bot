@@ -253,6 +253,38 @@ POST_CONCEPTS = [
     },
 ]
 
+def get_product_scenes(product: dict) -> list[str]:
+    folder = product["folder"]
+    if folder.startswith("KMHS"):
+        return [
+            "A gallery wall of 3 perfectly level frames on a clean white wall. In the corner of one frame, a slim magnetic strip is just barely visible — the only mounting hardware. Close-up angle, clean and precise.",
+            "Hands effortlessly sliding a framed picture sideways to reposition it on the wall. The magnetic strip allows smooth, damage-free adjustment. Capture the satisfying moment of easy repositioning.",
+            "A minimalist home office: a small whiteboard or clipboard magnetically mounted flat to the side of a monitor stand. Practical, sleek, no screws or tape.",
+            "A styled living room feature wall: 4 frames arranged in a gallery layout, all perfectly level. Magnetic strips visible as slim, intentional design details at the corners.",
+            "A close-up of two magnetic pads connecting — one on the wall, one on the back of a frame — snapping together cleanly. Satisfying and technical.",
+        ]
+    elif folder.startswith("KSS") or folder.startswith("KST"):
+        return [
+            "Hands pressing a transparent nano-tape strip firmly along the back edge of a picture frame, smoothing it flat — close-up, satisfying, clean.",
+            "A framed print mounted flush to a white wall. At one corner, a transparent strip catches the light — the only mounting hardware visible. Minimal and damage-free.",
+            "Close-up of a clear tape strip being slowly peeled from its liner, the nano-texture glistening in soft light. Feels technical and premium.",
+            "A rental apartment living room: a full gallery wall of art mounted entirely with tape. A small inset detail shows zero nail holes on the wall. Bold headline opportunity.",
+            "A jute rug corner lying perfectly flat on light hardwood floor. A slim transparent strip runs along the underside edge — no curling, no tripping hazard.",
+            "A bathroom shelf mounted cleanly to white subway tile — no drill holes, no grout cracking. The tape strip at each mounting corner is clean and confident.",
+        ]
+    elif folder.startswith("KSH"):
+        return [
+            "A spa-like bathroom: a thick white towel draped over a sleek chrome hook mounted on white tile. Minimal, clean, luxurious.",
+            "A styled apartment entryway: three evenly spaced hooks on a wall — a coat on one, a leather bag on the second, keys on the third. Organised, beautiful, real.",
+            "A clear hook on a white wall with a small trailing pothos plant hanging from it. The hook is nearly invisible — the plant appears to float. Minimal and magical.",
+            "A kitchen cabinet side panel: linen aprons and oven mitts hanging from two hooks. Practical but styled — warm tones, natural textures.",
+            "A minimalist bedroom wall: a matte gold hook holds a woven bag and a straw hat. Warm, aesthetic, intentional — feels like a boutique hotel.",
+        ]
+    else:
+        use_cases = product["use_cases"]
+        return [f"A beautifully styled home scene showing {u.lower()} — clean, aspirational, minimal." for u in use_cases[:5]]
+
+
 # Use date as seed so picks are consistent within a day but change daily
 rng = random.Random(date.today().toordinal())
 
@@ -269,71 +301,56 @@ use_cases = ", ".join(product["use_cases"])
 
 print(f"Today's product: {name}")
 
-# Pick 3 unique concept + style combos for today
+# Pick 3 unique concept + style combos and scenes for today
 concepts_today = rng.sample(POST_CONCEPTS, 3)
 styles_today = rng.sample(VISUAL_STYLES, 3)
-posts_today = list(zip(concepts_today, styles_today))
-print(f"Today's posts: {', '.join(c['name'] + ' / ' + s['name'] for c, s in posts_today)}\n")
+scenes_today = rng.sample(get_product_scenes(product), 3)
+posts_today = list(zip(concepts_today, styles_today, scenes_today))
+print(f"Today's posts: {', '.join(c['name'] + ' / ' + s['name'] for c, s, _ in posts_today)}\n")
 
-# Generate one image per concept+style combo
+# Generate one image per concept+style+scene combo
 output_paths = []
 
-for i, (concept, style) in enumerate(posts_today, 1):
+for i, (concept, style, scene) in enumerate(posts_today, 1):
     print(f"Generating image {i}/3 — {concept['name']} + {style['name']} ...")
 
-    people_note = "Include a real person naturally — hands, partial body, or a candid lifestyle moment. Authentic, not stock-photo staged." if style.get("people") else "No people. Let the scene speak for itself."
+    people_note = "Include a real person naturally in this scene — hands pressing the product, partial body hanging an item, or a candid lifestyle moment. Authentic and human, not stock-photo staged." if style.get("people") else "No people in this image. Let the product and scene be the hero."
 
     prompt = f"""
-You are a senior creative director at a world-class Instagram marketing agency. Your job is to create one premium, scroll-stopping lifestyle image for KLAPiT — a modern home organization brand whose products (nano-adhesive hooks, tapes, and strips) let people hang and organize anything without drilling or damaging walls.
+You are a senior art director at a world-class Instagram marketing agency. Create one premium, scroll-stopping square Instagram post for KLAPiT — a modern home brand making nano-adhesive hooks, tapes, and strips that let people hang anything without drilling.
 
-Target audience: renters, home decor lovers, minimalists, people aged 25–40 who care deeply about how their home looks and feels.
+Audience: renters, home decor lovers, minimalists aged 25–40 who care about how their home looks.
 
-━━━ PRODUCT CONTEXT (for creative reference only — do NOT show the product or logo) ━━━
-Product: {name}
+━━━ YOUR EXACT SCENE TO CREATE ━━━
+{scene}
+
+This is the specific image you must produce. Execute it with full creative commitment — beautiful lighting, intentional composition, magazine-quality finish. Do NOT substitute a different scene.
+
+━━━ PRODUCT IN THIS SCENE ━━━
+The product being used: {name}
 What it does: {description}
-Real use cases: {use_cases}
+The product (hook / tape strip / magnetic pad) must be clearly visible doing its job in this scene. No retail packaging. No logo. The physical product only.
 
-━━━ WHAT TO CREATE ━━━
-A creative, eye-catching Instagram lifestyle image that shows the KLAPiT product IN USE — not the retail box or packaging, but the actual physical product doing its job in a real, beautiful home setting.
-
-Think: Nike ads show shoes on feet, not in a box. Show the product in action.
-
-━━━ HOW TO SHOW EACH PRODUCT TYPE ━━━
-- If this is a TAPE or STRIP: show the actual transparent/clear tape strip being peeled and pressed onto a wall, OR show the strip holding a frame flat against the wall with the strip edge just barely visible at the corner — clean and satisfying. Never show tape flopped loosely or hanging off anything.
-- If this is a HOOK: show the sleek adhesive hook mounted flat on a wall, with one item hanging from it naturally — a towel, coat, plant, or keys. The hook is the star. It looks clean, intentional, and strong.
-- If this is a MAGNETIC STRIP: show the two magnetic pads holding two surfaces together — a frame mounted perfectly, two panels connected — clean and gap-free.
-
-━━━ TODAY'S CREATIVE FORMAT: {concept["name"]} ━━━
-{concept["concept"]}
-
-━━━ SCENE ━━━
-Use cases for this product: {use_cases}
-- Show one of these real use cases with the product visibly doing its job
-- The scene is a real, beautifully styled home — aspirational but achievable
-- 2 to 3 props maximum, all intentional, all relevant
-- No clutter, no random objects, nothing that distracts from the product in use
+━━━ VISUAL MOOD ━━━
+Aesthetic: {style["name"]} — {style["style"]}
+Lighting: {style["lighting"]}
 {people_note}
 
-━━━ VISUAL STYLE ━━━
-Aesthetic: {style["name"]}
-{style["style"]}
-Lighting: {style["lighting"]}
+━━━ TEXT / COPY IN THE IMAGE ━━━
+Format: {concept["name"]}
+Direction: {concept["text"]}
 
-━━━ TEXT IN THE IMAGE ━━━
-Creative direction for the copy: {concept["text"]}
-
-Spelling rules — zero tolerance:
-- Every word spelled perfectly — proofread letter by letter
-- Clean modern sans-serif font (Helvetica / Futura style)
-- Maximum 3 lines of text
-- High contrast — text must be instantly readable
+Rules:
+- Spell every word perfectly — zero tolerance for errors
+- Bold clean sans-serif font (Helvetica / Futura style)
+- Max 3 lines, high contrast against background
+- Place text intentionally — top third or bottom third, never centre-blocking the scene
 
 ━━━ NON-NEGOTIABLE ━━━
-- NO retail packaging or product box visible anywhere
-- NO KLAPiT logo or brand name rendered in the image
-- The PRODUCT ITSELF (hook, tape strip, magnetic pad) must be clearly visible and recognisable
-- PERFECT SQUARE: 1:1 ratio — not portrait, not landscape
-- Premium, clean, intentional — every pixel earns its place
+- PERFECT SQUARE: 1:1 ratio
+- No retail box or packaging anywhere
+- No KLAPiT logo or brand name rendered in the image
+- Premium and intentional — every element earns its place
 """
 
     contents = [prompt]
