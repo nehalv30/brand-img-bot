@@ -269,19 +269,6 @@ use_cases = ", ".join(product["use_cases"])
 
 print(f"Today's product: {name}")
 
-# Load product images from the folder path defined in JSON
-product_folder = PROD_DIR / product["folder"]
-if not product_folder.exists():
-    raise FileNotFoundError(f"Product folder not found: {product_folder}")
-
-all_image_paths = get_image_paths(product_folder)
-if not all_image_paths:
-    raise ValueError(f"No images found in {product_folder}")
-
-# Shuffle so each of the 3 generations gets a different angle
-rng.shuffle(all_image_paths)
-print(f"Found {len(all_image_paths)} angle(s) for {name}")
-
 # Pick 3 unique concept + style combos for today
 concepts_today = rng.sample(POST_CONCEPTS, 3)
 styles_today = rng.sample(VISUAL_STYLES, 3)
@@ -294,38 +281,37 @@ output_paths = []
 for i, (concept, style) in enumerate(posts_today, 1):
     print(f"Generating image {i}/3 — {concept['name']} + {style['name']} ...")
 
-    # Use a different angle for each generation; cycle if fewer images than posts
-    angle_image = load_pil_images([all_image_paths[(i - 1) % len(all_image_paths)]])
-    if not angle_image:
-        raise ValueError(f"Could not load image: {all_image_paths[(i - 1) % len(all_image_paths)]}")
-
-    people_note = "Include a real person naturally in this scene — hands, partial body, or full lifestyle moment. Keep it authentic, not stock-photo staged." if style.get("people") else "No people. Let the product and the scene be the hero."
+    people_note = "Include a real person naturally — hands, partial body, or a candid lifestyle moment. Authentic, not stock-photo staged." if style.get("people") else "No people. Let the scene speak for itself."
 
     prompt = f"""
-You are a senior creative director at a top-tier Instagram marketing agency. You are producing one scroll-stopping, premium square post for KLAPiT — a modern home organization brand. KLAPiT makes nano-adhesive hooks, tapes, and strips so people can hang and organize anything without drilling. Their target audience: renters, home decor lovers, minimalists, people aged 25–40 who care about how their home looks.
+You are a senior creative director at a world-class Instagram marketing agency. Your job is to create one premium, scroll-stopping lifestyle image for KLAPiT — a modern home organization brand whose products (nano-adhesive hooks, tapes, and strips) let people hang and organize anything without drilling or damaging walls.
 
-━━━ THE PRODUCT ━━━
-Name: {name}
-Brand: {brand_name}
-Tagline: {tagline}
+Target audience: renters, home decor lovers, minimalists, people aged 25–40 who care deeply about how their home looks and feels.
+
+━━━ PRODUCT CONTEXT (for creative reference only — do NOT show the product or logo) ━━━
+Product: {name}
 What it does: {description}
-Key features: {key_features}
 Real use cases: {use_cases}
 
-━━━ TODAY'S CREATIVE BRIEF ━━━
-Format: {concept["name"]}
-Direction: {concept["concept"]}
+━━━ WHAT TO CREATE ━━━
+A beautiful, aspirational lifestyle IMAGE — no product packaging, no logo, no brand name visible anywhere in the image.
+The image should show the WORLD this product creates: beautifully organized, styled spaces where things are hung perfectly, walls look clean, and life feels effortless.
+Think: high-end home decor magazine. The viewer should feel inspired and think "I want my home to look like this."
 
-━━━ TEXT TO RENDER IN THE IMAGE ━━━
-Use this as your creative direction for the copy — write the actual text in the style described:
-{concept["text"]}
+━━━ TODAY'S CREATIVE FORMAT: {concept["name"]} ━━━
+{concept["concept"]}
 
-SPELLING — ZERO TOLERANCE:
-- Every single word rendered in the image must be spelled perfectly
-- Read each word letter by letter before finalizing
-- Clean modern sans-serif typography only (Helvetica / Futura style)
-- Maximum 3 lines of text total
-- High contrast between text and background — must be readable at a glance
+━━━ HOW THIS PRODUCT'S RESULT LOOKS (so you build the right scene) ━━━
+- If this is a TAPE or STRIP: you see ONLY the result — a frame or poster mounted cleanly flush to a wall, a rug corner lying perfectly flat. The tape itself is completely invisible. No strips, no adhesive, nothing hanging or dangling.
+- If this is a HOOK: a small sleek hook sits flat on the wall. Below it hangs exactly one item naturally — a towel, coat, set of keys, or plant. Clean and intentional.
+- If this is a MAGNETIC STRIP: two surfaces sit flush together, held magnetically. The result looks like a normal mounted object — clean, gap-free, no hardware visible.
+
+━━━ SCENE RULES ━━━
+Use cases for this product: {use_cases}
+- Build a scene that directly shows one of these use cases as a result — not the product being applied
+- 2 to 3 props maximum — every single one earns its place
+- No random objects, no clutter, nothing unrelated to this product's purpose
+- Real, styled, aspirational home setting — not generic stock photo
 
 ━━━ VISUAL STYLE ━━━
 Aesthetic: {style["name"]}
@@ -333,42 +319,23 @@ Aesthetic: {style["name"]}
 Lighting: {style["lighting"]}
 {people_note}
 
-━━━ PRODUCT — THE MOST IMPORTANT ELEMENT ━━━
-The image uploaded IS the real KLAPiT product packaging. Reproduce it exactly:
-- Match the packaging 100%: colors, logo, text on pack, proportions, shape — zero creative liberty here
-- Product must fill at least 30–40% of the image — large, clear, undeniable
-- Entire product fully in frame — never crop, shrink, or blur it
-- No halos, glow effects, fake labels, adhesive strings, or any embellishments
-- The product must be legible to someone who has never seen it before
+━━━ TEXT IN THE IMAGE ━━━
+Creative direction for the copy: {concept["text"]}
 
-━━━ HOW THIS PRODUCT WORKS — READ BEFORE BUILDING THE SCENE ━━━
-This product is: {name}
-
-CRITICAL — understand the product before drawing it:
-- If this is a TAPE or STRIP (double-sided nano tape): the tape goes BETWEEN two surfaces and is completely HIDDEN once applied. You NEVER see the tape in the final result. The scene shows the result only — a frame or mirror mounted cleanly flush against a wall, a rug corner lying flat and secured, a poster held perfectly level. No tape is visible. No strips hanging off things. No tape wrapped around edges. The tape is invisible by design.
-- If this is a HOOK: the hook body attaches to the wall via the adhesive backing. What hangs FROM the hook (towel, coat, keys, plant) dangles below or beside the hook naturally. The hook itself is visible on the wall. Nothing is wrapped in tape.
-- If this is a MAGNETIC STRIP: two small magnetic pads sit flush on two surfaces, connecting them invisibly. The result looks clean and drill-free.
-
-━━━ SCENE — SPECIFIC TO THIS PRODUCT ONLY ━━━
-This is an ad for: {name}
-This product's real uses are: {use_cases}
-
-Build a scene ONLY around those real uses:
-- Show the RESULT of using this product — the beautifully mounted frame, the perfectly hanging towel, the secured rug — not the process of applying tape
-- NEVER show tape strips, adhesive strings, or any mounting material visibly attached to, draped over, or hanging from any object in the scene
-- The product PACKAGING is shown separately as a standalone element (propped on a shelf, placed on a surface beside the scene, or as its own product shot panel)
-- Props: maximum 3, all relevant, all intentional — no random objects
-- The scene must feel like a real, aspirational home — not stock, not generic
-
-━━━ CREATIVE FREEDOM ━━━
-You have full creative freedom within this brief. Choose the layout, color palette, prop placement, and typographic hierarchy that makes this post stand out in a crowded Instagram feed. Be bold. Be smart. Make it look like it was made by a world-class agency — because it was.
+Spelling rules — zero tolerance:
+- Every word spelled perfectly — proofread letter by letter
+- Clean modern sans-serif font (Helvetica / Futura style)
+- Maximum 3 lines of text
+- High contrast — text must be instantly readable
 
 ━━━ NON-NEGOTIABLE ━━━
-- PERFECT SQUARE output: 1:1 ratio — not portrait, not landscape
-- Premium, clean, intentional — every element earns its place
+- NO product packaging visible anywhere
+- NO KLAPiT logo or brand name in the image
+- PERFECT SQUARE: 1:1 ratio — not portrait, not landscape
+- Premium, clean, intentional — every pixel earns its place
 """
 
-    contents = [prompt] + angle_image
+    contents = [prompt]
     response = generate_image(contents)
 
     concept_slug = concept["name"].lower().replace(" ", "_")
