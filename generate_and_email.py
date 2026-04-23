@@ -9,7 +9,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from google import genai
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
 
 load_dotenv()
 
@@ -90,6 +90,66 @@ def send_email_with_attachments(subject: str, body: str, attachment_paths: list[
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.login(EMAIL_FROM, EMAIL_APP_PASSWORD)
         smtp.send_message(msg)
+
+
+def crop_to_square(img: Image.Image) -> Image.Image:
+    w, h = img.size
+    side = min(w, h)
+    left = (w - side) // 2
+    top = (h - side) // 2
+    return img.crop((left, top, left + side, top + side))
+
+
+def add_text_overlay(img: Image.Image, text: str) -> Image.Image:
+    img = crop_to_square(img).copy().convert("RGBA")
+    size = img.size[0]
+
+    # Find a usable bold font
+    font = None
+    font_size = max(36, size // 18)
+    font_paths = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+        "/System/Library/Fonts/Helvetica.ttc",
+    ]
+    for fp in font_paths:
+        if Path(fp).exists():
+            font = ImageFont.truetype(fp, font_size)
+            break
+    if font is None:
+        font = ImageFont.load_default()
+
+    lines = text.strip().split("\n")
+    draw = ImageDraw.Draw(img)
+
+    # Measure text block
+    line_heights = [draw.textbbox((0, 0), l, font=font)[3] for l in lines]
+    line_spacing = int(font_size * 0.3)
+    block_h = sum(line_heights) + line_spacing * (len(lines) - 1)
+    block_w = max(draw.textbbox((0, 0), l, font=font)[2] for l in lines)
+
+    pad_x, pad_y = int(size * 0.05), int(size * 0.05)
+    x = pad_x
+    y = size - block_h - pad_y * 2
+
+    # Semi-transparent dark backing
+    overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    ov_draw = ImageDraw.Draw(overlay)
+    ov_draw.rectangle(
+        [x - pad_x // 2, y - pad_y // 2,
+         x + block_w + pad_x // 2, y + block_h + pad_y // 2],
+        fill=(0, 0, 0, 140)
+    )
+    img = Image.alpha_composite(img, overlay)
+
+    draw = ImageDraw.Draw(img)
+    cur_y = y
+    for line in lines:
+        draw.text((x, cur_y), line, font=font, fill=(255, 255, 255, 255))
+        cur_y += draw.textbbox((0, 0), line, font=font)[3] + line_spacing
+
+    return img.convert("RGB")
 
 
 def generate_image(contents, max_retries=10, retry_delay=30):
@@ -408,31 +468,24 @@ for i, (angle, mood, copy) in enumerate(zip(angles_today, moods_today, copies_to
 
     visual_description = product.get("visual_description", product_type)
 
-    prompt = f"""Create a premium Instagram square photo (1:1 ratio) for a home organization product.
+    prompt = f"""Create a premium lifestyle photo for an Instagram post. No text, no words, no labels anywhere in the image.
 
-PRODUCT: {name}
-WHAT IT LOOKS LIKE (match this exactly): {visual_description}
+PRODUCT CONTEXT: {name} — {visual_description}
 USE CASES: {use_cases}
 
-The uploaded image shows the real product — study it carefully and reproduce the physical product's exact appearance, color, shape, and size in the scene.
-
-TODAY'S CREATIVE ANGLE: "{angle}"
+CREATIVE ANGLE: "{angle}"
 VISUAL MOOD: {mood}
 
-Invent a specific, beautiful, realistic scene around this angle. Be creative and fresh.
+Create a beautiful, realistic, aspirational home scene that captures this angle. The product ({name}) should be naturally present in the scene doing its job.
 
-CRITICAL REALISM RULES — the image must make physical sense:
-- Tape and strips are DOUBLE-SIDED — they go on the BACK of an object between it and the wall. You NEVER see tape on the front face or top edge of a frame. If showing tape being applied, show it being pressed to the back of the frame or the wall surface.
-- Hooks are mounted FLAT on the wall surface — items hang DOWN from the hook naturally by gravity. A bag hangs from a hook by its strap, a towel drapes over it, a plant pot hangs by a cord from it.
-- Magnetic pads sit at the CORNERS behind a frame — they are not visible from the front, only as slim squares at the frame edge.
-- Ask yourself: "Does this look physically possible in real life?" If not, fix it.
+REALISM RULES:
+- Tape/strips are double-sided and invisible once applied — never show tape on the front face of a frame, only the result (cleanly mounted objects)
+- Hooks mount flat on walls — items hang down from them naturally by gravity, never wrapped in tape or rope
+- Hanging plants must hang from a hook or cord attached to the wall/ceiling — NOT from macramé rope hangers
+- Everything must look physically possible in real life
+- No retail packaging, no brand names, no logos, no text of any kind in the image
 
-No retail packaging. No brand names or logos anywhere in the image.
-
-Text overlay — bold white sans-serif, top-left or bottom-left corner:
-{copy}
-
-Perfect 1:1 square. Magazine quality."""
+Magazine quality. Eye-catching colors. Realistic."""
 
     contents = [prompt] + ref_image
     response = generate_image(contents)
@@ -442,8 +495,9 @@ Perfect 1:1 square. Magazine quality."""
     saved = False
     for part in response.parts:
         if getattr(part, "inline_data", None) is not None:
-            image = part.as_image()
-            image.save(output_path)
+            raw_image = part.as_image()
+            final_image = add_text_overlay(raw_image, copy)
+            final_image.save(output_path)
             print(f"  Saved: {output_path.name}")
             output_paths.append(output_path)
             saved = True
@@ -452,7 +506,7 @@ Perfect 1:1 square. Magazine quality."""
             print(f"  Model said: {part.text}")
 
     if not saved:
-        print(f"  Warning: No image returned for concept '{concept['name']}'")
+        print(f"  Warning: No image returned for angle '{angle}'")
 
 if not output_paths:
     raise ValueError("No images were generated across all concepts")
