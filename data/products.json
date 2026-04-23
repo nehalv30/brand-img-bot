@@ -2,6 +2,7 @@
   {
     "folder": "KMHS",
     "name": "Klapit Magnetic Hanging Strips",
+    "visual_description": "Two small flat rectangular white/cream pads (roughly 1 inch x 1 inch each). One pad sticks to the wall, the matching pad sticks to the back of the object. When in use they are nearly invisible — just two small white squares at the corners of a frame, flush against the wall. The surface facing outward is smooth and flat.",
     "description": "Say goodbye to drills and screws with KLAPiT Magnetic Picture Hanging Strips. Using advanced Fiber-Infused Enhanced Nano Technology (FIEN) and super strong NED magnets, these strips offer a secure, damage-free, and reusable mounting solution for any space.",
     "key_features": [
       "Revolutionary Magnetic Mounting: drill-free, damage-free hanging for pictures, electronics, and more with a strong magnetic hold",
@@ -23,6 +24,7 @@
   {
     "folder": "KSS/Gripzilla Roll 1m",
     "name": "Gripzilla Roll 1m",
+    "visual_description": "A roll of clear transparent double-sided nano tape, about 2cm wide. The tape is completely see-through — like a thin strip of glass. When applied between two surfaces it is totally invisible from the front. The roll itself is a compact spool of clear tape with a white liner on one side.",
     "description": "KLAPiT Super Tape GRIPZILLA (1m Roll) is the ultimate heavy-duty double-sided nano tape using Fiber-Infused Enhanced Nanotechnology (FIEN). Holds up to 60LB/27KG, works on wood, tile, stone, glass, metal, and more — waterproof, residue-free, and built for indoor and outdoor use.",
     "key_features": [
       "Unmatched Strength: holds up to 60LB/27KG with advanced Fiber-Infused Enhanced Nanotechnology for secure, heavy-duty mounting",
@@ -44,6 +46,7 @@
   {
     "folder": "KSS/Gripzilla Roll 3m",
     "name": "Gripzilla Roll 3m",
+    "visual_description": "A longer roll of clear transparent double-sided nano tape, about 2cm wide. The tape is completely see-through — like a thin strip of glass. When applied between two surfaces it is totally invisible from the front. The roll is a larger spool of clear tape with a white liner.",
     "description": "KLAPiT Super Tape GRIPZILLA (3m Roll) is the heavy-duty double-sided nano tape built for larger projects. Using Fiber-Infused Enhanced Nanotechnology (FIEN), it holds up to 180LB/81KG across wood, tile, stone, glass, metal, and more — waterproof, residue-free, and ready for indoor and outdoor use.",
     "key_features": [
       "Unmatched Strength: holds up to 180LB/81KG with advanced Fiber-Infused Enhanced Nanotechnology for the most demanding mounting tasks",
@@ -65,6 +68,7 @@
   {
     "folder": "KSS/EzHold Strip",
     "name": "EzHold Strip",
+    "visual_description": "Pre-cut clear transparent squares, each 1 inch x 1 inch. They look like small pieces of glass or cling film — perfectly transparent with a slight sheen. When pressed onto a surface they become nearly invisible. Used in sets of 4 squares at the corners of a frame or object.",
     "description": "Experience the next level of mounting technology with KLAPiT Super Strip EZHold. Innovative 1\"x1\" tape squares crafted using enhanced nanotechnology for unparalleled strength and convenience. Supports up to 15 lbs total — ideal for mirrors, artwork, and home appliances.",
     "key_features": [
       "Superior Holding Power: each strip of 4 squares supports up to 3.3 lbs — ideal for mirrors, artwork, and appliances",
@@ -86,6 +90,7 @@
   {
     "folder": "KSS/Gripzilla Strip",
     "name": "Gripzilla Strip",
+    "visual_description": "Pre-cut clear transparent squares, each 1 inch x 1 inch — slightly thicker and sturdier than standard tape. Completely see-through with a slight glossy surface. Applied in groups of 4 at object corners. When in place on a wall or surface they are virtually invisible.",
     "description": "KLAPiT Super Strip GRIPZILLA is a heavy-duty double-sided nano mounting tape with Fiber-Infused Enhanced Nanotechnology. Pre-cut into 1\"x1\" squares, each strip of 4 holds up to 5 lbs — no nails, no residue, no mess. Perfect for home, office, and everything in between.",
     "key_features": [
       "Advanced Fiber-Infused Technology: cutting-edge nanotechnology delivers unmatched strength and durability for home decor and office setups",
@@ -107,6 +112,7 @@
   {
     "folder": "KST/Tough/Tough1m",
     "name": "Klapit Super Tape Tough 1m",
+    "visual_description": "A 1-metre roll of clear heavy-duty double-sided tape, wider than standard tape at about 2.5cm wide. Crystal clear and transparent — looks like thick cling film. When applied it is invisible from the front. Comes coiled inside a reusable clear clamshell case with a measuring scale on the edge.",
     "description": "KLAPiT Super Tape Tough (1m/40in) is a clear, heavy-duty double-sided adhesive tape using Enhanced Nano Technology. Holds up to 90 lbs (2.28 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
     "key_features": [
       "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 90 lbs — surpassing most adhesives in its class",
@@ -128,6 +134,7 @@
   {
     "folder": "KST/Tough/Tough3m",
     "name": "Klapit Super Tape Tough 3m",
+    "visual_description": "A 3-metre roll of clear heavy-duty double-sided tape, about 2.5cm wide. Crystal clear and transparent — looks like thick cling film. When applied it is invisible from the front. Comes coiled inside a reusable clear clamshell case with a measuring scale on the edge.",
     "description": "KLAPiT Super Tape Tough (3m/118in) is a clear, heavy-duty double-sided adhesive tape using Enhanced Nano Technology. Holds up to 270 lbs/123 kg (2.28 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
     "key_features": [
       "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 270 lbs/123 kg — surpassing most adhesives in its class",
@@ -149,6 +156,7 @@
   {
     "folder": "KST/Tough/Tough5m",
     "name": "Klapit Super Tape Tough 5m",
+    "visual_description": "A 5-metre roll of clear heavy-duty double-sided tape, about 2.5cm wide. Crystal clear and transparent — looks like thick cling film. When applied it is invisible from the front. Comes coiled inside a reusable clear clamshell case with a measuring scale on the edge.",
     "description": "KLAPiT Super Tape Tough (5m/196in) is a clear, heavy-duty double-sided adhesive tape using Enhanced Nano Technology. Holds up to 450 lbs (2.28 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
     "key_features": [
       "Exceptional Holding Power: supports up to 450 lbs with advanced Nanotechnology — perfect for the heaviest items without nails or screws",
@@ -170,6 +178,7 @@
   {
     "folder": "KST/Slim/Slim1m",
     "name": "Klapit Super Tape Slim 1m",
+    "visual_description": "A 1-metre roll of clear slim double-sided tape, narrower at about 1.2cm wide. Crystal clear and transparent — almost invisible even before application. When applied it is completely invisible from the front. Comes coiled inside a reusable clear clamshell case with a measuring scale.",
     "description": "KLAPiT Super Tape Slim (1m/40in) is a clear, slim-profile double-sided adhesive tape using Enhanced Nano Technology. Holds up to 50 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
     "key_features": [
       "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 50 lbs — ideal for lighter precision mounting tasks",
@@ -191,6 +200,7 @@
   {
     "folder": "KST/Slim/Slim3m",
     "name": "Klapit Super Tape Slim 3m",
+    "visual_description": "A 3-metre roll of clear slim double-sided tape, about 1.2cm wide. Crystal clear and transparent. When applied between surfaces it disappears completely. Comes coiled inside a reusable clear clamshell case with a measuring scale on the edge.",
     "description": "KLAPiT Super Tape Slim (3m/118in) is a clear, slim-profile double-sided adhesive tape using Enhanced Nano Technology. Holds up to 150 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Ideal for frames, carpets, doormats, power cords, and kitchen tools.",
     "key_features": [
       "Ultra-Strong Adhesion: Enhanced Nano Technology delivers a super-strong bond holding up to 150 lbs — perfect for frames, carpets, doormats, and kitchen tools",
@@ -212,6 +222,7 @@
   {
     "folder": "KST/Slim/Slim7m",
     "name": "Klapit Super Tape Slim 7m",
+    "visual_description": "A 7-metre roll of clear slim double-sided tape, about 1.2cm wide. Crystal clear and transparent — the tape almost looks like it isn't there. When applied it vanishes completely between two surfaces. Comes coiled inside a reusable clear clamshell case.",
     "description": "KLAPiT Super Tape Slim (7m/276in) is a clear, slim-profile double-sided adhesive tape using Enhanced Nano Technology. Holds up to 350 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
     "key_features": [
       "Extreme Hold: supports up to 350 lbs with enhanced nanotechnology for a reliable, super-strong bond across long runs",
@@ -233,6 +244,7 @@
   {
     "folder": "KST/Slim/Slim10m",
     "name": "Klapit Super Tape Slim 10m",
+    "visual_description": "A 10-metre roll of clear slim double-sided tape, about 1.2cm wide. The tape is completely transparent — nearly invisible even when you're looking for it. When applied between two surfaces it disappears entirely. Comes coiled inside a reusable clear clamshell case with measuring scale.",
     "description": "KLAPiT Super Tape Slim (10m/394in) is a clear, slim-profile double-sided nano mounting tape using Enhanced Nano Technology. Holds up to 500 lbs (1.27 lbs per inch), withstands temperatures from -10°C to 80°C, and removes cleanly with zero residue. Comes in a reusable clamshell case with a built-in measuring scale.",
     "key_features": [
       "Extreme Hold: supports up to 500 lbs with enhanced nanotechnology — the maximum hold in the Slim range for the biggest projects",
@@ -254,6 +266,7 @@
   {
     "folder": "KSH/Silver",
     "name": "Klapit Super Hooks Silver",
+    "visual_description": "A small compact wall hook, approximately 2.4 inches square. The body is flat stainless steel silver/chrome colored. A smooth curved hook arm extends forward and upward from the top center of the flat base. The back has an adhesive pad. When mounted on a wall it looks like a sleek modern metal hook pressed flat, with only the curved hook arm protruding. Clean, minimal, metallic silver finish.",
     "description": "KLAPiT Super Hook Silver is a heavy-duty adhesive wall hook made of premium stainless steel. Supports up to 11 lbs per hook, sticks instantly to tile, wood, stone, metal, and glass — no drilling needed. Waterproof, rustproof, and removes cleanly without residue. Pack of 4 reusable hooks.",
     "key_features": [
       "Ultra-Strong Hold: premium stainless steel hook supports up to 11 lbs (5 kg) — ideal for towels, coats, backpacks, and more in a compact 2.4\"x2.4\" size",
@@ -275,6 +288,7 @@
   {
     "folder": "KSH/Clear",
     "name": "Klapit Super Hooks Clear",
+    "visual_description": "A small compact wall hook, approximately 2.4 inches square. The body is fully transparent/clear plastic — nearly invisible against any wall. A smooth curved hook arm extends forward and upward from the top center of the flat base. When mounted it almost disappears into the wall, with just the curved clear hook arm visible. Discreet and minimal.",
     "description": "KLAPiT Super Hook Clear is a heavy-duty adhesive wall hook with a discreet, transparent design. Supports up to 11 lbs per hook, sticks instantly to tile, wood, stone, metal, and glass — no drilling needed. Waterproof, rustproof, and removes cleanly without residue. Pack of 4 reusable hooks.",
     "key_features": [
       "Ultra-Strong Hold: premium stainless steel hook supports up to 11 lbs (5 kg) — ideal for towels, coats, backpacks, and more in a compact 2.4\"x2.4\" size",
@@ -296,6 +310,7 @@
   {
     "folder": "KSH/Gold",
     "name": "Klapit Super Hooks Gold",
+    "visual_description": "A small compact wall hook, approximately 2.4 inches square. The body has a warm gold/brass colored finish — elegant and premium looking. A smooth curved hook arm extends forward and upward from the top center of the flat base. The back has an adhesive pad. When mounted it looks like a premium gold hardware accent on the wall, with the curved gold hook arm protruding forward. Warm, luxurious, brushed gold finish.",
     "description": "KLAPiT Super Hook Gold is a heavy-duty adhesive wall hook with a premium gold finish that blends elegantly into any decor. Supports up to 11 lbs per hook, sticks instantly to tile, wood, stone, metal, and glass — no drilling needed. Waterproof, rustproof, and removes cleanly without residue. Pack of 4 reusable hooks.",
     "key_features": [
       "Ultra-Strong Hold: premium stainless steel hook supports up to 11 lbs (5 kg) — ideal for towels, coats, backpacks, and more in a compact 2.4\"x2.4\" size",

@@ -110,6 +110,114 @@ def generate_image(contents, max_retries=10, retry_delay=30):
                 raise
 
 
+# Creative angles — emotional moments and human stories (not scene descriptions)
+CREATIVE_ANGLES = [
+    "the relief of getting your full rental deposit back",
+    "moving into your very first apartment with bare walls",
+    "that corner you walk past every day and silently cringe at",
+    "the 5-minute weekend project that changes everything",
+    "coming home after a long day to a calm, organized space",
+    "showing your newly decorated home to friends for the first time",
+    "the quiet satisfaction of everything finally being in its place",
+    "the anxiety of renting from a strict landlord",
+    "the 'I wish I'd known about this sooner' moment",
+    "a home that looks like it belongs in a design magazine",
+    "the before photo you're too embarrassed to show anyone",
+    "Sunday morning rituals in a beautifully organized space",
+    "the 'no tools, no problem' generation of home decorators",
+    "strength that surprises you — holding more than you'd ever expect",
+    "the invisible solution to a very visible problem",
+    "the organized parent who somehow has it all together",
+    "a minimalist who refuses to compromise on style",
+    "seasonal refresh — new year, new home, zero damage",
+    "the entryway that sets the mood the moment you walk in",
+    "a bathroom that feels like checking into a boutique hotel",
+    "the home office that finally makes you want to work",
+    "the kitchen that makes cooking feel like a ritual",
+    "the bedroom wall that went from bare to beautiful overnight",
+    "a plant lover creating a living wall without touching the plaster",
+    "the joy of rearranging your home on a whim, no consequences",
+    "a gallery wall that took 20 minutes and cost nothing to repair",
+    "the flex of a perfectly organized space that took zero effort to maintain",
+    "a child's room that can be redecorated every few months",
+    "the friend everyone calls when they move — because they have the hack",
+    "discovering you don't need a contractor for any of this",
+    "what good design actually looks like when you get close up",
+    "a home so organized it feels like a life upgrade",
+    "the satisfying click and hold of something done right",
+    "renting without sacrificing your personal style — finally",
+    "the detail that makes guests ask 'how did you do that?'",
+    "a fresh start in a new space — making it yours without fear",
+]
+
+# Visual moods — emotional atmosphere, not just aesthetics
+VISUAL_MOODS = [
+    "warm golden afternoon light, honey tones, feels like home",
+    "crisp bright morning light, white walls, clean fresh start",
+    "moody and dramatic — dark walls, strong contrast, editorial",
+    "soft and dreamy — blush, marble, gold, luxurious and calm",
+    "bold graphic color — one strong background color, product pops",
+    "Scandinavian calm — pale wood, white, minimal, serene",
+    "warm earthy — terracotta, linen, rattan, real and lived-in",
+    "sharp editorial — high contrast, fashion magazine energy",
+    "cozy human warmth — real home, soft shadows, authentic",
+    "deep sage green walls, warm brass, quietly premium",
+    "midnight blue and white — striking, confident, premium",
+    "sun-drenched and airy — bleached wood, cotton, holiday feeling",
+]
+
+# Copy lines per product type — punchy, varied, no brand names
+COPY_BY_TYPE = {
+    "KMHS": [
+        "NO NAILS.\nPERFECTLY LEVEL.", "SNAP. HANG. DONE.", "REPOSITION ANYTIME.\nZERO DAMAGE.",
+        "GALLERY WALL.\nZERO HOLES.", "YOUR DEPOSIT IS SAFE.", "YOUR WALLS. YOUR RULES.",
+        "SMALL PRODUCT.\nBIG DIFFERENCE.", "BEFORE / AFTER.\nPEEL. PRESS. PERFECT.",
+        "DAMAGE FREE.\nEVERY TIME.", "THE SMARTER WAY TO HANG.",
+    ],
+    "KSS": [
+        "HOLDS 60 LBS.\nLEAVES NOTHING BEHIND.", "NO NAILS. NO MARKS. NO WORRIES.",
+        "FLAT FLOORS. SAFE SPACES.", "DRILLS ARE OVERRATED.", "NANO TECHNOLOGY. REAL HOLD.",
+        "YOUR WHOLE GALLERY.\nZERO HOLES.", "THERE'S A SMARTER WAY.", "MOUNT ANYTHING.\nDAMAGE NOTHING.",
+        "CLEAR. STRONG. INVISIBLE.", "PEEL. PRESS. DONE.",
+    ],
+    "KST": [
+        "HOLDS 500 LBS.\nLEAVES NOTHING BEHIND.", "NO NAILS. NO MARKS. NO WORRIES.",
+        "FLAT FLOORS. SAFE SPACES.", "DRILLS ARE OVERRATED.", "NANO TECHNOLOGY. REAL HOLD.",
+        "YOUR WHOLE GALLERY.\nZERO HOLES.", "THERE'S A SMARTER WAY.", "MOUNT ANYTHING.\nDAMAGE NOTHING.",
+        "TOUGH HOLD. CLEAN REMOVAL.", "ONE STRIP. SERIOUS HOLD.",
+    ],
+    "KSH": [
+        "DAMAGE-FREE. EVERY DAY.", "YOUR HOME. ORGANIZED.", "HANG YOUR PLANTS.\nNOT YOUR WORRIES.",
+        "MORNING ROUTINE. SORTED.", "SMALL HOOK. BIG STYLE.", "ORGANIZED. DAMAGE FREE.",
+        "YOUR BATHROOM.\nFINALLY ORGANIZED.", "BEFORE / AFTER.\nTHE ONLY CHANGE YOU NEED.",
+        "STICK IT. HANG IT. LOVE IT.", "ZERO HOLES. ALL STYLE.",
+    ],
+    "DEFAULT": [
+        "HANG ANYTHING.\nDAMAGE NOTHING.", "NO DRILLS. NO DAMAGE. NO STRESS.",
+        "YOUR WALLS.\nYOUR STYLE.", "PEEL. PRESS. PERFECT.",
+        "THE SMARTER WAY TO HANG.", "ZERO HOLES. FULL STYLE.",
+    ],
+}
+
+def get_copy_lines(product: dict) -> list[str]:
+    folder = product["folder"]
+    for key in COPY_BY_TYPE:
+        if folder.startswith(key):
+            return COPY_BY_TYPE[key]
+    return COPY_BY_TYPE["DEFAULT"]
+
+
+def get_product_type_context(product: dict) -> str:
+    folder = product["folder"]
+    if folder.startswith("KMHS"):
+        return "magnetic hanging strips — two small magnetic pads that attach to the wall and the back of an object, holding it firmly with no screws or nails. The pads are slim, flat, and nearly invisible once in place."
+    elif folder.startswith("KSS") or folder.startswith("KST"):
+        return "double-sided nano-tape — a clear transparent strip that sticks between two surfaces and holds them together invisibly. The tape itself is never visible from the front; only the result (a mounted frame, secured rug, or attached shelf) is seen."
+    elif folder.startswith("KSH"):
+        return "adhesive wall hooks — small sleek hooks that press flat onto any wall surface. The hook body is visible on the wall; items hang from it naturally. No drilling, no screws, completely removable."
+    return "nano-adhesive home organization product that lets people hang and organize without drilling"
+
+
 # Visual styles — each has a distinct color palette and mood
 VISUAL_STYLES = [
     {
@@ -253,36 +361,6 @@ POST_CONCEPTS = [
     },
 ]
 
-def get_product_scenes(product: dict) -> list[str]:
-    folder = product["folder"]
-    if folder.startswith("KMHS"):
-        return [
-            "A gallery wall of 3 perfectly level frames on a clean white wall. In the corner of one frame, a slim magnetic strip is just barely visible — the only mounting hardware. Close-up angle, clean and precise.",
-            "Hands effortlessly sliding a framed picture sideways to reposition it on the wall. The magnetic strip allows smooth, damage-free adjustment. Capture the satisfying moment of easy repositioning.",
-            "A minimalist home office: a small whiteboard or clipboard magnetically mounted flat to the side of a monitor stand. Practical, sleek, no screws or tape.",
-            "A styled living room feature wall: 4 frames arranged in a gallery layout, all perfectly level. Magnetic strips visible as slim, intentional design details at the corners.",
-            "A close-up of two magnetic pads connecting — one on the wall, one on the back of a frame — snapping together cleanly. Satisfying and technical.",
-        ]
-    elif folder.startswith("KSS") or folder.startswith("KST"):
-        return [
-            "Hands pressing a transparent nano-tape strip firmly along the back edge of a picture frame, smoothing it flat — close-up, satisfying, clean.",
-            "A framed print mounted flush to a white wall. At one corner, a transparent strip catches the light — the only mounting hardware visible. Minimal and damage-free.",
-            "Close-up of a clear tape strip being slowly peeled from its liner, the nano-texture glistening in soft light. Feels technical and premium.",
-            "A rental apartment living room: a full gallery wall of art mounted entirely with tape. A small inset detail shows zero nail holes on the wall. Bold headline opportunity.",
-            "A jute rug corner lying perfectly flat on light hardwood floor. A slim transparent strip runs along the underside edge — no curling, no tripping hazard.",
-            "A bathroom shelf mounted cleanly to white subway tile — no drill holes, no grout cracking. The tape strip at each mounting corner is clean and confident.",
-        ]
-    elif folder.startswith("KSH"):
-        return [
-            "A spa-like bathroom: a thick white towel draped over a sleek chrome hook mounted on white tile. Minimal, clean, luxurious.",
-            "A styled apartment entryway: three evenly spaced hooks on a wall — a coat on one, a leather bag on the second, keys on the third. Organised, beautiful, real.",
-            "A clear hook on a white wall with a small trailing pothos plant hanging from it. The hook is nearly invisible — the plant appears to float. Minimal and magical.",
-            "A kitchen cabinet side panel: linen aprons and oven mitts hanging from two hooks. Practical but styled — warm tones, natural textures.",
-            "A minimalist bedroom wall: a matte gold hook holds a woven bag and a straw hat. Warm, aesthetic, intentional — feels like a boutique hotel.",
-        ]
-    else:
-        use_cases = product["use_cases"]
-        return [f"A beautifully styled home scene showing {u.lower()} — clean, aspirational, minimal." for u in use_cases[:5]]
 
 
 # Use date as seed so picks are consistent within a day but change daily
@@ -309,75 +387,57 @@ all_image_paths = get_image_paths(product_folder)
 if not all_image_paths:
     raise ValueError(f"No images found in {product_folder}")
 
-# Pick 3 unique concept + style combos and scenes for today
-concepts_today = rng.sample(POST_CONCEPTS, 3)
-styles_today = rng.sample(VISUAL_STYLES, 3)
-scenes_today = rng.sample(get_product_scenes(product), 3)
-posts_today = list(zip(concepts_today, styles_today, scenes_today))
-print(f"Today's posts: {', '.join(c['name'] + ' / ' + s['name'] for c, s, _ in posts_today)}\n")
+# Pick 3 unique creative combinations for today
+angles_today = rng.sample(CREATIVE_ANGLES, 3)
+moods_today = rng.sample(VISUAL_MOODS, 3)
+copy_lines = get_copy_lines(product)
+copies_today = rng.sample(copy_lines, min(3, len(copy_lines)))
+product_type = get_product_type_context(product)
 
-# Generate one image per concept+style+scene combo
+print(f"Today's angles: {', '.join(angles_today)}\n")
+
+# Generate one image per combination
 output_paths = []
 
-for i, (concept, style, scene) in enumerate(posts_today, 1):
-    print(f"Generating image {i}/3 — {concept['name']} + {style['name']} ...")
+for i, (angle, mood, copy) in enumerate(zip(angles_today, moods_today, copies_today), 1):
+    print(f"Generating image {i}/3 — angle: '{angle}' ...")
 
     ref_image = load_pil_images([all_image_paths[(i - 1) % len(all_image_paths)]])
     if not ref_image:
-        raise ValueError(f"Could not load reference image")
+        raise ValueError("Could not load reference image")
 
-    people_note = "Include a real person naturally in this scene — hands using the product, partial body in a candid home moment. Authentic, not stock-photo staged." if style.get("people") else "No people. Let the product and scene speak."
+    visual_description = product.get("visual_description", product_type)
 
-    prompt = f"""
-You are a senior art director at a world-class Instagram marketing agency. Create one premium, scroll-stopping square Instagram post for a home organization brand that makes nano-adhesive hooks, tapes, and strips — products that let people hang and organize anything without drilling or damaging walls.
+    prompt = f"""Create a premium Instagram square photo (1:1 ratio) for a home organization product.
 
-Audience: renters, home decor lovers, minimalists aged 25–40 who care deeply about how their home looks.
+PRODUCT: {name}
+WHAT IT LOOKS LIKE (match this exactly): {visual_description}
+USE CASES: {use_cases}
 
-━━━ REFERENCE IMAGE ━━━
-The uploaded image shows the actual physical product. Study it carefully:
-- Note the exact shape, color, size, and material of the actual hook / tape strip / magnetic pad
-- You will show this exact physical product (not the retail box, not the packaging) being used naturally in the scene
-- Reproduce its real appearance accurately — same color, same shape, same proportions
-- Do NOT show the retail box, cardboard backing, or any packaging
-- Do NOT show any brand name or logo anywhere in the image
+The uploaded image shows the real product — study it carefully and reproduce the physical product's exact appearance, color, shape, and size in the scene.
 
-━━━ THE SCENE TO CREATE ━━━
-{scene}
+TODAY'S CREATIVE ANGLE: "{angle}"
+VISUAL MOOD: {mood}
 
-Execute this scene with full creative commitment. Beautiful, magazine-quality. Do not substitute a different scene.
+Invent a specific, beautiful, realistic scene around this angle. Be creative and fresh.
 
-━━━ COLOR PALETTE & MOOD ━━━
-{style["name"]}: {style["palette"]}
-Lighting: {style["lighting"]}
-{people_note}
-Make the colors feel intentional and eye-catching — the kind of image people stop scrolling for and save.
+CRITICAL REALISM RULES — the image must make physical sense:
+- Tape and strips are DOUBLE-SIDED — they go on the BACK of an object between it and the wall. You NEVER see tape on the front face or top edge of a frame. If showing tape being applied, show it being pressed to the back of the frame or the wall surface.
+- Hooks are mounted FLAT on the wall surface — items hang DOWN from the hook naturally by gravity. A bag hangs from a hook by its strap, a towel drapes over it, a plant pot hangs by a cord from it.
+- Magnetic pads sit at the CORNERS behind a frame — they are not visible from the front, only as slim squares at the frame edge.
+- Ask yourself: "Does this look physically possible in real life?" If not, fix it.
 
-━━━ COPY / TEXT IN THE IMAGE ━━━
-Theme: {concept["name"]}
-Write copy in this style: {concept["text"]}
+No retail packaging. No brand names or logos anywhere in the image.
 
-Typography rules:
-- Every word spelled perfectly — proofread letter by letter before rendering
-- Bold clean sans-serif (Helvetica / Futura style)
-- Max 3 lines, placed in top or bottom third of image
-- High contrast — instantly readable at a glance
-- NO brand names, NO logos, NO product names in the text
+Text overlay — bold white sans-serif, top-left or bottom-left corner:
+{copy}
 
-━━━ NON-NEGOTIABLE ━━━
-- PERFECT SQUARE: 1:1 ratio — not portrait, not landscape
-- Physical product visible and accurate to the reference image
-- No retail packaging or box anywhere in the image
-- No brand name or logo anywhere in the image
-- Premium, eye-catching, intentional — every pixel earns its place
-"""
+Perfect 1:1 square. Magazine quality."""
 
     contents = [prompt] + ref_image
-
-    contents = [prompt]
     response = generate_image(contents)
 
-    concept_slug = concept["name"].lower().replace(" ", "_")
-    output_path = OUT_DIR / f"generated_post_{i}_{concept_slug}.png"
+    output_path = OUT_DIR / f"generated_post_{i}.png"
 
     saved = False
     for part in response.parts:
@@ -398,7 +458,7 @@ if not output_paths:
     raise ValueError("No images were generated across all concepts")
 
 # Send all generated images in one email
-post_summary = ", ".join(f"{c['name']} ({s['name']})" for c, s, _ in posts_today)
+post_summary = f"{len(prompts_today)} posts generated for {name}"
 send_email_with_attachments(
     subject=f"Daily KLAPIT Creatives — {name} ({len(output_paths)} posts)",
     body=(
