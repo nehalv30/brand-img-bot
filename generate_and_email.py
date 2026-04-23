@@ -458,7 +458,7 @@ if not output_paths:
     raise ValueError("No images were generated across all concepts")
 
 # Send all generated images in one email
-post_summary = f"{len(prompts_today)} posts generated for {name}"
+post_summary = f"{len(output_paths)} posts generated for {name}"
 send_email_with_attachments(
     subject=f"Daily KLAPIT Creatives — {name} ({len(output_paths)} posts)",
     body=(
