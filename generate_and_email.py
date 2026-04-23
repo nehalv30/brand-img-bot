@@ -100,13 +100,7 @@ def crop_to_square(img: Image.Image) -> Image.Image:
     return img.crop((left, top, left + side, top + side))
 
 
-def add_text_overlay(img: Image.Image, text: str) -> Image.Image:
-    img = crop_to_square(img).copy().convert("RGBA")
-    size = img.size[0]
-
-    # Find a usable bold font
-    font = None
-    font_size = max(36, size // 18)
+def get_font(size: int) -> ImageFont.FreeTypeFont:
     font_paths = [
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
@@ -115,15 +109,52 @@ def add_text_overlay(img: Image.Image, text: str) -> Image.Image:
     ]
     for fp in font_paths:
         if Path(fp).exists():
-            font = ImageFont.truetype(fp, font_size)
-            break
-    if font is None:
-        font = ImageFont.load_default()
+            return ImageFont.truetype(fp, size)
+    return ImageFont.load_default()
 
+
+def composite_product(scene: Image.Image, product_path: Path) -> Image.Image:
+    """Paste the real product photo as a clean inset in the bottom-right corner."""
+    scene = scene.convert("RGBA")
+    size = scene.size[0]
+
+    product = Image.open(product_path).convert("RGBA")
+    # Resize product to 28% of scene width, keeping aspect ratio
+    max_side = int(size * 0.28)
+    product.thumbnail((max_side, max_side), Image.LANCZOS)
+
+    pad = int(size * 0.03)
+    pw, ph = product.size
+
+    # White rounded rectangle backing behind product
+    backing_w = pw + pad * 2
+    backing_h = ph + pad * 2
+    bx = size - backing_w - pad
+    by = size - backing_h - pad
+
+    backing = Image.new("RGBA", scene.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(backing)
+    radius = int(size * 0.02)
+    draw.rounded_rectangle([bx, by, bx + backing_w, by + backing_h],
+                            radius=radius, fill=(255, 255, 255, 230))
+    scene = Image.alpha_composite(scene, backing)
+
+    # Paste product centered in the backing
+    px = bx + pad
+    py = by + pad
+    scene.paste(product, (px, py), product)
+    return scene
+
+
+def add_text_overlay(img: Image.Image, text: str) -> Image.Image:
+    img = img.convert("RGBA")
+    size = img.size[0]
+
+    font_size = max(36, size // 18)
+    font = get_font(font_size)
     lines = text.strip().split("\n")
     draw = ImageDraw.Draw(img)
 
-    # Measure text block
     line_heights = [draw.textbbox((0, 0), l, font=font)[3] for l in lines]
     line_spacing = int(font_size * 0.3)
     block_h = sum(line_heights) + line_spacing * (len(lines) - 1)
@@ -133,13 +164,12 @@ def add_text_overlay(img: Image.Image, text: str) -> Image.Image:
     x = pad_x
     y = size - block_h - pad_y * 2
 
-    # Semi-transparent dark backing
     overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     ov_draw = ImageDraw.Draw(overlay)
     ov_draw.rectangle(
         [x - pad_x // 2, y - pad_y // 2,
          x + block_w + pad_x // 2, y + block_h + pad_y // 2],
-        fill=(0, 0, 0, 140)
+        fill=(0, 0, 0, 150)
     )
     img = Image.alpha_composite(img, overlay)
 
@@ -468,26 +498,19 @@ for i, (angle, mood, copy) in enumerate(zip(angles_today, moods_today, copies_to
 
     visual_description = product.get("visual_description", product_type)
 
-    prompt = f"""Create a premium lifestyle photo for an Instagram post. No text, no words, no labels anywhere in the image.
+    prompt = f"""Create a premium lifestyle home photo for an Instagram post.
 
-PRODUCT CONTEXT: {name} — {visual_description}
-USE CASES: {use_cases}
+WHAT THIS PRODUCT DOES: {description}
+BEST USED FOR: {use_cases}
 
 CREATIVE ANGLE: "{angle}"
 VISUAL MOOD: {mood}
 
-Create a beautiful, realistic, aspirational home scene that captures this angle. The product ({name}) should be naturally present in the scene doing its job.
+Show a beautiful, realistic, aspirational home scene that captures this creative angle. Focus purely on the lifestyle result — a beautifully organized, styled space. Do NOT show any product, hands applying tape, or hooks on walls. Just the beautiful end result: frames perfectly hung, organized entryways, styled rooms, flat rugs, mounted shelves — whatever fits the use cases above.
 
-REALISM RULES:
-- Tape/strips are double-sided and invisible once applied — never show tape on the front face of a frame, only the result (cleanly mounted objects)
-- Hooks mount flat on walls — items hang down from them naturally by gravity, never wrapped in tape or rope
-- Hanging plants must hang from a hook or cord attached to the wall/ceiling — NOT from macramé rope hangers
-- Everything must look physically possible in real life
-- No retail packaging, no brand names, no logos, no text of any kind in the image
+No people with awkward poses. No text. No logos. No brand names. No product packaging. Just a stunning, magazine-quality home scene."""
 
-Magazine quality. Eye-catching colors. Realistic."""
-
-    contents = [prompt] + ref_image
+    contents = [prompt]
     response = generate_image(contents)
 
     output_path = OUT_DIR / f"generated_post_{i}.png"
@@ -496,7 +519,13 @@ Magazine quality. Eye-catching colors. Realistic."""
     for part in response.parts:
         if getattr(part, "inline_data", None) is not None:
             raw_image = part.as_image()
-            final_image = add_text_overlay(raw_image, copy)
+            # 1. Crop to perfect square
+            final_image = crop_to_square(raw_image)
+            # 2. Composite real product photo into bottom-right corner
+            product_ref = all_image_paths[(i - 1) % len(all_image_paths)]
+            final_image = composite_product(final_image, product_ref)
+            # 3. Add text overlay bottom-left
+            final_image = add_text_overlay(final_image, copy)
             final_image.save(output_path)
             print(f"  Saved: {output_path.name}")
             output_paths.append(output_path)
