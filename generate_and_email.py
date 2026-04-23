@@ -294,30 +294,30 @@ What it does: {description}
 Real use cases: {use_cases}
 
 ━━━ WHAT TO CREATE ━━━
-A beautiful, aspirational lifestyle IMAGE — no product packaging, no logo, no brand name visible anywhere in the image.
-The image should show the WORLD this product creates: beautifully organized, styled spaces where things are hung perfectly, walls look clean, and life feels effortless.
-Think: high-end home decor magazine. The viewer should feel inspired and think "I want my home to look like this."
+A creative, eye-catching Instagram lifestyle image that shows the KLAPiT product IN USE — not the retail box or packaging, but the actual physical product doing its job in a real, beautiful home setting.
+
+Think: Nike ads show shoes on feet, not in a box. Show the product in action.
+
+━━━ HOW TO SHOW EACH PRODUCT TYPE ━━━
+- If this is a TAPE or STRIP: show the actual transparent/clear tape strip being peeled and pressed onto a wall, OR show the strip holding a frame flat against the wall with the strip edge just barely visible at the corner — clean and satisfying. Never show tape flopped loosely or hanging off anything.
+- If this is a HOOK: show the sleek adhesive hook mounted flat on a wall, with one item hanging from it naturally — a towel, coat, plant, or keys. The hook is the star. It looks clean, intentional, and strong.
+- If this is a MAGNETIC STRIP: show the two magnetic pads holding two surfaces together — a frame mounted perfectly, two panels connected — clean and gap-free.
 
 ━━━ TODAY'S CREATIVE FORMAT: {concept["name"]} ━━━
 {concept["concept"]}
 
-━━━ HOW THIS PRODUCT'S RESULT LOOKS (so you build the right scene) ━━━
-- If this is a TAPE or STRIP: you see ONLY the result — a frame or poster mounted cleanly flush to a wall, a rug corner lying perfectly flat. The tape itself is completely invisible. No strips, no adhesive, nothing hanging or dangling.
-- If this is a HOOK: a small sleek hook sits flat on the wall. Below it hangs exactly one item naturally — a towel, coat, set of keys, or plant. Clean and intentional.
-- If this is a MAGNETIC STRIP: two surfaces sit flush together, held magnetically. The result looks like a normal mounted object — clean, gap-free, no hardware visible.
-
-━━━ SCENE RULES ━━━
+━━━ SCENE ━━━
 Use cases for this product: {use_cases}
-- Build a scene that directly shows one of these use cases as a result — not the product being applied
-- 2 to 3 props maximum — every single one earns its place
-- No random objects, no clutter, nothing unrelated to this product's purpose
-- Real, styled, aspirational home setting — not generic stock photo
+- Show one of these real use cases with the product visibly doing its job
+- The scene is a real, beautifully styled home — aspirational but achievable
+- 2 to 3 props maximum, all intentional, all relevant
+- No clutter, no random objects, nothing that distracts from the product in use
+{people_note}
 
 ━━━ VISUAL STYLE ━━━
 Aesthetic: {style["name"]}
 {style["style"]}
 Lighting: {style["lighting"]}
-{people_note}
 
 ━━━ TEXT IN THE IMAGE ━━━
 Creative direction for the copy: {concept["text"]}
@@ -329,8 +329,9 @@ Spelling rules — zero tolerance:
 - High contrast — text must be instantly readable
 
 ━━━ NON-NEGOTIABLE ━━━
-- NO product packaging visible anywhere
-- NO KLAPiT logo or brand name in the image
+- NO retail packaging or product box visible anywhere
+- NO KLAPiT logo or brand name rendered in the image
+- The PRODUCT ITSELF (hook, tape strip, magnetic pad) must be clearly visible and recognisable
 - PERFECT SQUARE: 1:1 ratio — not portrait, not landscape
 - Premium, clean, intentional — every pixel earns its place
 """
