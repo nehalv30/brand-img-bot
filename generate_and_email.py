@@ -113,38 +113,6 @@ def get_font(size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.load_default()
 
 
-def composite_product(scene: Image.Image, product_path: Path) -> Image.Image:
-    """Paste the real product photo as a clean inset in the bottom-right corner."""
-    scene = scene.convert("RGBA")
-    size = scene.size[0]
-
-    product = Image.open(product_path).convert("RGBA")
-    # Resize product to 28% of scene width, keeping aspect ratio
-    max_side = int(size * 0.28)
-    product.thumbnail((max_side, max_side), Image.LANCZOS)
-
-    pad = int(size * 0.03)
-    pw, ph = product.size
-
-    # White rounded rectangle backing behind product
-    backing_w = pw + pad * 2
-    backing_h = ph + pad * 2
-    bx = size - backing_w - pad
-    by = size - backing_h - pad
-
-    backing = Image.new("RGBA", scene.size, (0, 0, 0, 0))
-    draw = ImageDraw.Draw(backing)
-    radius = int(size * 0.02)
-    draw.rounded_rectangle([bx, by, bx + backing_w, by + backing_h],
-                            radius=radius, fill=(255, 255, 255, 230))
-    scene = Image.alpha_composite(scene, backing)
-
-    # Paste product centered in the backing
-    px = bx + pad
-    py = by + pad
-    scene.paste(product, (px, py), product)
-    return scene
-
 
 def add_text_overlay(img: Image.Image, text: str) -> Image.Image:
     img = img.convert("RGBA")
@@ -201,255 +169,103 @@ def generate_image(contents, max_retries=10, retry_delay=30):
 
 
 # Creative angles — emotional moments and human stories (not scene descriptions)
-CREATIVE_ANGLES = [
-    "the relief of getting your full rental deposit back",
-    "moving into your very first apartment with bare walls",
-    "that corner you walk past every day and silently cringe at",
-    "the 5-minute weekend project that changes everything",
-    "coming home after a long day to a calm, organized space",
-    "showing your newly decorated home to friends for the first time",
-    "the quiet satisfaction of everything finally being in its place",
-    "the anxiety of renting from a strict landlord",
-    "the 'I wish I'd known about this sooner' moment",
-    "a home that looks like it belongs in a design magazine",
-    "the before photo you're too embarrassed to show anyone",
-    "Sunday morning rituals in a beautifully organized space",
-    "the 'no tools, no problem' generation of home decorators",
-    "strength that surprises you — holding more than you'd ever expect",
-    "the invisible solution to a very visible problem",
-    "the organized parent who somehow has it all together",
-    "a minimalist who refuses to compromise on style",
-    "seasonal refresh — new year, new home, zero damage",
-    "the entryway that sets the mood the moment you walk in",
-    "a bathroom that feels like checking into a boutique hotel",
-    "the home office that finally makes you want to work",
-    "the kitchen that makes cooking feel like a ritual",
-    "the bedroom wall that went from bare to beautiful overnight",
-    "a plant lover creating a living wall without touching the plaster",
-    "the joy of rearranging your home on a whim, no consequences",
-    "a gallery wall that took 20 minutes and cost nothing to repair",
-    "the flex of a perfectly organized space that took zero effort to maintain",
-    "a child's room that can be redecorated every few months",
-    "the friend everyone calls when they move — because they have the hack",
-    "discovering you don't need a contractor for any of this",
-    "what good design actually looks like when you get close up",
-    "a home so organized it feels like a life upgrade",
-    "the satisfying click and hold of something done right",
-    "renting without sacrificing your personal style — finally",
-    "the detail that makes guests ask 'how did you do that?'",
-    "a fresh start in a new space — making it yours without fear",
+THEMES = [
+    # Format: (angle, visual direction)
+    ("Moving into your first place — bare walls, big dreams, zero budget for a contractor",
+     "A fresh empty apartment, warm afternoon light, one or two items just hung on a clean wall"),
+    ("Your landlord thinks you haven't touched the walls. You have.",
+     "A beautifully decorated rental — gallery wall, hooks, mounted shelves — pristine walls, zero nail holes"),
+    ("That corner you walked past every day and cringed at. Fixed.",
+     "A previously ignored corner of a home now beautifully organised — hooks, frames, or shelves in place"),
+    ("The kind of bathroom that makes you feel like you're at a boutique hotel",
+     "A minimal spa-like bathroom, white tile, towels hanging from sleek hooks, warm morning light"),
+    ("Sunday morning in the home you've always wanted",
+     "A sun-filled living room or bedroom corner, beautifully styled, calm and aspirational"),
+    ("Your entryway sets the mood for your whole day. Make it count.",
+     "A styled modern apartment entryway — coat, bag, and keys each in their perfect place on the wall"),
+    ("When guests arrive and ask 'wait, how is that hanging there?'",
+     "A beautifully mounted piece — a large mirror, gallery wall, or floating shelf — with no visible hardware"),
+    ("The before photo nobody wants to share. The after photo everyone saves.",
+     "A split composition: LEFT messy bare wall or cluttered space; RIGHT the same space perfectly organised and styled"),
+    ("A gallery wall that took 20 minutes and will cost you nothing to move",
+     "A stunning gallery wall of 4-6 different frames arranged perfectly on a warm-toned wall, no nail holes"),
+    ("Your rug keeps curling. Your guests keep tripping. Not anymore.",
+     "A beautiful flat-lay view of a styled room — rug lying perfectly flat on hardwood floors, zero curl"),
+    ("Kitchen goals: everything within reach, nothing in the way",
+     "A beautifully organised kitchen — utensils, spice jars, or tools mounted neatly on the wall or cabinet sides"),
+    ("Plant mum/dad level: hanging garden, zero holes in the ceiling",
+     "Lush trailing plants hanging at different heights on a wall or near a window, hooks on the wall holding them"),
+    ("5 minutes. A few strips. The whole room changed.",
+     "A before/after or single styled shot showing a dramatic but simple home transformation"),
+    ("Decorating without commitment — because your taste evolves",
+     "A person casually rearranging frames on a wall with ease, warm candid moment, real home setting"),
+    ("Heavy things. Clean walls. No compromise.",
+     "Something impressively heavy — a large mirror, thick wooden frame, or heavy shelf — mounted perfectly on a clean wall"),
+    ("The home that looks designed but cost nothing to change",
+     "An editorial-quality styled room that looks like it belongs in a home magazine — clean, intentional, beautiful"),
+    ("What your morning routine looks like when your home actually works",
+     "A calm, organised morning scene — coat ready on a hook, keys hanging, bag in place — everything where it belongs"),
+    ("Renters deserve beautiful homes too",
+     "A beautifully styled rental apartment — art on walls, hooks, organised spaces — looking like an owned home"),
+    ("The detail nobody notices but everyone feels",
+     "An extreme close-up or detail shot of something mounted perfectly — a frame edge flush on a wall, a rug corner flat"),
+    ("Organised is the new aesthetic",
+     "A flat lay or room scene where everything is perfectly in its place — minimal, intentional, satisfying"),
 ]
 
-# Visual moods — emotional atmosphere, not just aesthetics
-VISUAL_MOODS = [
-    "warm golden afternoon light, honey tones, feels like home",
-    "crisp bright morning light, white walls, clean fresh start",
-    "moody and dramatic — dark walls, strong contrast, editorial",
-    "soft and dreamy — blush, marble, gold, luxurious and calm",
-    "bold graphic color — one strong background color, product pops",
-    "Scandinavian calm — pale wood, white, minimal, serene",
-    "warm earthy — terracotta, linen, rattan, real and lived-in",
-    "sharp editorial — high contrast, fashion magazine energy",
-    "cozy human warmth — real home, soft shadows, authentic",
-    "deep sage green walls, warm brass, quietly premium",
-    "midnight blue and white — striking, confident, premium",
-    "sun-drenched and airy — bleached wood, cotton, holiday feeling",
-]
 
-# Copy lines per product type — punchy, varied, no brand names
-COPY_BY_TYPE = {
-    "KMHS": [
-        "NO NAILS.\nPERFECTLY LEVEL.", "SNAP. HANG. DONE.", "REPOSITION ANYTIME.\nZERO DAMAGE.",
-        "GALLERY WALL.\nZERO HOLES.", "YOUR DEPOSIT IS SAFE.", "YOUR WALLS. YOUR RULES.",
-        "SMALL PRODUCT.\nBIG DIFFERENCE.", "BEFORE / AFTER.\nPEEL. PRESS. PERFECT.",
-        "DAMAGE FREE.\nEVERY TIME.", "THE SMARTER WAY TO HANG.",
-    ],
-    "KSS": [
-        "HOLDS 60 LBS.\nLEAVES NOTHING BEHIND.", "NO NAILS. NO MARKS. NO WORRIES.",
-        "FLAT FLOORS. SAFE SPACES.", "DRILLS ARE OVERRATED.", "NANO TECHNOLOGY. REAL HOLD.",
-        "YOUR WHOLE GALLERY.\nZERO HOLES.", "THERE'S A SMARTER WAY.", "MOUNT ANYTHING.\nDAMAGE NOTHING.",
-        "CLEAR. STRONG. INVISIBLE.", "PEEL. PRESS. DONE.",
-    ],
-    "KST": [
-        "HOLDS 500 LBS.\nLEAVES NOTHING BEHIND.", "NO NAILS. NO MARKS. NO WORRIES.",
-        "FLAT FLOORS. SAFE SPACES.", "DRILLS ARE OVERRATED.", "NANO TECHNOLOGY. REAL HOLD.",
-        "YOUR WHOLE GALLERY.\nZERO HOLES.", "THERE'S A SMARTER WAY.", "MOUNT ANYTHING.\nDAMAGE NOTHING.",
-        "TOUGH HOLD. CLEAN REMOVAL.", "ONE STRIP. SERIOUS HOLD.",
-    ],
-    "KSH": [
-        "DAMAGE-FREE. EVERY DAY.", "YOUR HOME. ORGANIZED.", "HANG YOUR PLANTS.\nNOT YOUR WORRIES.",
-        "MORNING ROUTINE. SORTED.", "SMALL HOOK. BIG STYLE.", "ORGANIZED. DAMAGE FREE.",
-        "YOUR BATHROOM.\nFINALLY ORGANIZED.", "BEFORE / AFTER.\nTHE ONLY CHANGE YOU NEED.",
-        "STICK IT. HANG IT. LOVE IT.", "ZERO HOLES. ALL STYLE.",
-    ],
-    "DEFAULT": [
-        "HANG ANYTHING.\nDAMAGE NOTHING.", "NO DRILLS. NO DAMAGE. NO STRESS.",
-        "YOUR WALLS.\nYOUR STYLE.", "PEEL. PRESS. PERFECT.",
-        "THE SMARTER WAY TO HANG.", "ZERO HOLES. FULL STYLE.",
-    ],
-}
+def get_scene_for_product(product: dict, angle: str, visual: str) -> str:
+    """Return a scene description grounded in what this product actually does."""
+    folder = product["folder"]
+    use_cases = ", ".join(product["use_cases"])
+
+    if folder.startswith("KMHS"):
+        what_it_does = "magnetic strips that mount pictures, clocks, and objects to walls with no nails — objects appear to float cleanly on the wall"
+    elif folder.startswith("KSS") or folder.startswith("KST"):
+        what_it_does = "clear double-sided nano tape that mounts frames, secures rugs flat, and holds shelves — completely invisible once applied"
+    elif folder.startswith("KSH"):
+        what_it_does = "small adhesive wall hooks that hold towels, coats, bags, plants, and kitchen items — hooks press flat on any wall surface"
+    else:
+        what_it_does = f"adhesive home organizer used for: {use_cases}"
+
+    return f"{visual}. The scene should naturally show the result of using {what_it_does}. Use cases shown: {use_cases}."
+
 
 def get_copy_lines(product: dict) -> list[str]:
-    folder = product["folder"]
-    for key in COPY_BY_TYPE:
-        if folder.startswith(key):
-            return COPY_BY_TYPE[key]
-    return COPY_BY_TYPE["DEFAULT"]
-
-
-def get_product_type_context(product: dict) -> str:
+    """Return punchy copy lines tailored to this product type."""
     folder = product["folder"]
     if folder.startswith("KMHS"):
-        return "magnetic hanging strips — two small magnetic pads that attach to the wall and the back of an object, holding it firmly with no screws or nails. The pads are slim, flat, and nearly invisible once in place."
+        return [
+            "Float it on the wall.\nNo nails. No kidding.",
+            "Walls that work for you.\nZero holes required.",
+            "Magnetic hold.\nClean finish.",
+            "Heavy things. Clean walls.\nNo compromise.",
+            "Mount it. Move it.\nRepeat.",
+        ]
     elif folder.startswith("KSS") or folder.startswith("KST"):
-        return "double-sided nano-tape — a clear transparent strip that sticks between two surfaces and holds them together invisibly. The tape itself is never visible from the front; only the result (a mounted frame, secured rug, or attached shelf) is seen."
+        return [
+            "Invisible hold.\nVisible results.",
+            "Flat floors. Happy home.\nZero trace.",
+            "Peel. Press. Perfect.\nEvery time.",
+            "Secure it. Style it.\nLeave no mark.",
+            "The tape that disappears.\nThe results that don't.",
+        ]
     elif folder.startswith("KSH"):
-        return "adhesive wall hooks — small sleek hooks that press flat onto any wall surface. The hook body is visible on the wall; items hang from it naturally. No drilling, no screws, completely removable."
-    return "nano-adhesive home organization product that lets people hang and organize without drilling"
-
-
-# Visual styles — each has a distinct color palette and mood
-VISUAL_STYLES = [
-    {
-        "name": "Crisp White & Natural Wood",
-        "palette": "pure white walls, warm light oak wood accents, soft cream textiles",
-        "lighting": "bright diffused natural daylight from a large window, even and shadow-free",
-        "people": False,
-    },
-    {
-        "name": "Warm Terracotta & Cream",
-        "palette": "terracotta and burnt orange tones, cream plaster walls, natural linen and rattan props",
-        "lighting": "warm amber side light, soft organic shadows that feel golden and inviting",
-        "people": False,
-    },
-    {
-        "name": "Deep Sage & Off-White",
-        "palette": "deep sage green walls or background, off-white and warm beige accents, brass or matte black hardware",
-        "lighting": "soft directional natural light from the side, gentle shadows, calm and premium",
-        "people": False,
-    },
-    {
-        "name": "Moody Dark & Gold",
-        "palette": "deep charcoal or dark slate walls, gold and warm white accents, high contrast and editorial",
-        "lighting": "single strong directional spotlight, dramatic controlled shadows",
-        "people": False,
-    },
-    {
-        "name": "Scandinavian Minimal",
-        "palette": "white and light grey, pale birch wood, single muted accent color (dusty blue or blush pink)",
-        "lighting": "cool soft daylight, clean and almost clinical but warm — like a Stockholm apartment",
-        "people": False,
-    },
-    {
-        "name": "Warm Candid Person",
-        "palette": "warm neutrals — cream, sand, warm white — lived-in but beautiful, cozy and real",
-        "lighting": "warm natural indoor light, soft shadows, feels like a real human moment",
-        "people": True,
-    },
-    {
-        "name": "Bold Color Pop",
-        "palette": "one saturated background color — cobalt blue, forest green, or deep blush — product and props in white or neutral to pop against it",
-        "lighting": "flat even light, graphic and clean, like a modern brand poster",
-        "people": False,
-    },
-    {
-        "name": "Golden Hour Warm",
-        "palette": "honey, amber, and warm gold tones throughout — feels like late afternoon sun in a beautiful home",
-        "lighting": "warm directional golden hour light from the side, long soft shadows",
-        "people": False,
-    },
-    {
-        "name": "Modern Minimal Black & White",
-        "palette": "pure black and white only — stark, graphic, editorial. One element in a single accent color for impact.",
-        "lighting": "high contrast studio light — crisp shadows, bold and confident",
-        "people": False,
-    },
-    {
-        "name": "Soft Blush & Marble",
-        "palette": "soft blush pink, white marble textures, brushed gold or rose gold accents — elegant and feminine",
-        "lighting": "soft even light, almost glowing, feels luxurious and aspirational",
-        "people": False,
-    },
-]
-
-# Post concepts — relatable human moments and varied content formats
-POST_CONCEPTS = [
-    {
-        "name": "Moving Day Relief",
-        "concept": "That specific relief of moving into a new place and realising you can decorate without drilling. Show a person or a styled new apartment space being set up beautifully — art going up, hooks being placed — with zero mess and zero tools.",
-        "text": "'Moving in? Leave the drill behind.' or 'New home. Zero holes. All vibes.' — warm, relatable, relief-filled.",
-    },
-    {
-        "name": "The 5-Minute Win",
-        "concept": "Show the satisfying result of a quick, easy win — a space that went from bare to beautiful in minutes. No tools, no mess, no contractor. Just a product, two hands, and a beautiful result. Make the viewer feel like they can do this TODAY.",
-        "text": "'5 minutes. Zero tools. This.' or 'That corner you've been ignoring? Fixed.' — punchy and motivating.",
-    },
-    {
-        "name": "Landlord Won't Know",
-        "concept": "Playful take on the renter experience — decorating freely without fear of losing your deposit. The visual should feel like a small victory. A beautifully styled wall or organized space, completely damage-free.",
-        "text": "Witty, playful copy: 'Your landlord will never know.' or 'Full deposit. Full decor.' — light and fun.",
-    },
-    {
-        "name": "Strength That Surprises",
-        "concept": "Lead with the jaw-dropping weight capacity of this product. Show something heavier than you'd expect hanging perfectly confidently. The stat is the headline, the scene is the proof.",
-        "text": "Giant bold weight number from the product features (e.g. '60 LBS' or '500 LBS'). One sharp line below: 'No nails. No kidding.' — powerful and direct.",
-    },
-    {
-        "name": "The ASMR Close-Up",
-        "concept": "An extreme close-up, satisfying detail shot — the product being pressed firmly into place, a strip being smoothed, a hook clicking flat against tile. ASMR-worthy. No wide scene needed. Pure satisfying detail that stops the scroll.",
-        "text": "Minimal text — one short line placed in a corner: 'Clean hold. Every time.' or 'Pressed. Locked. Done.' — quiet and confident.",
-    },
-    {
-        "name": "Before It Was Bare",
-        "concept": "A clean two-panel split — LEFT: a sad, bare, undecorated wall or messy corner. RIGHT: the exact same space, transformed and beautiful. The product is the only thing that changed. Make both panels look photographic and real.",
-        "text": "Simple 'Before' and 'After' labels on each panel. One bold line at the bottom: 'PEEL. PRESS. PERFECT.' — satisfying and final.",
-    },
-    {
-        "name": "The Invisible Hero",
-        "concept": "The product doing its job so cleanly it's almost invisible. A beautifully mounted frame, a floating plant, a perfectly secured rug — and if you look closely, the product is there, quietly doing the work. Elegance through simplicity.",
-        "text": "Subtle copy: 'The best products disappear.' or 'Strong enough to hold. Clean enough to hide.' — clever and premium.",
-    },
-    {
-        "name": "That One Corner",
-        "concept": "Everyone has that one corner, wall, or spot in their home they've been meaning to fix. Show it solved — beautifully organized, hooks in place, frames hung, clutter gone. Make the viewer think 'I need to do that to my space right now.'",
-        "text": "'That corner you've been ignoring deserves better.' or 'Every wall has potential.' — relatable and inspiring.",
-    },
-    {
-        "name": "Morning Routine Ready",
-        "concept": "Show the product as part of a beautiful morning routine — coat and bag hanging ready by the door, keys on a hook, an organized space that makes your morning feel calm. Aspirational but achievable daily life.",
-        "text": "'Your mornings, but better.' or 'Grab and go. Every single day.' — calm, lifestyle-oriented.",
-    },
-    {
-        "name": "The Bold Poster",
-        "concept": "Typography dominates the image — one giant, punchy headline in massive bold letters takes up most of the frame. The product is shown small but clearly. Feels like a modern campaign billboard. No fluff, just impact.",
-        "text": "3–5 word all-caps headline: 'NO NAILS. NO LIMITS.' or 'HANG ANYTHING. DAMAGE NOTHING.' or 'YOUR WALLS. YOUR RULES.' — bold, loud, confident.",
-    },
-    {
-        "name": "One Feature, Full Commitment",
-        "concept": "Pick ONE standout feature of this product and make the whole image about it. Waterproof = steamy bathroom scene. Residue-free = pristine clean wall after a hook is removed. Reusable = hands effortlessly repositioning a frame. One idea. No distractions.",
-        "text": "One or two word feature headline — 'Waterproof.' / 'Zero residue.' / 'Reusable.' — then one clean supporting line below.",
-    },
-    {
-        "name": "Dream Home Moment",
-        "concept": "Pure aspirational home decor — a specific beautifully styled room corner that makes the viewer stop and save the post. The product is part of what makes it possible, doing its job naturally. Feels like a home magazine spread.",
-        "text": "'This is what your walls have been waiting for.' or 'Home goals. No drill required.' — warm and aspirational.",
-    },
-    {
-        "name": "The Smart Swap",
-        "concept": "Show the contrast between old-school (drill, nails, wall damage, tools) and this product's clean solution. Not a messy infographic — a beautiful visual contrast. Two worlds: messy/damaged vs. clean/effortless. The smart choice is obvious.",
-        "text": "'Nails vs this. Easy choice.' or 'Same wall. Smarter solution.' — confident, slightly witty.",
-    },
-    {
-        "name": "Plant Parent Goals",
-        "concept": "Show hanging plants elevated to an art form — trailing pothos, small succulents, air plants — hung using the product. Green, lush, and alive against a beautiful wall. Speaks to the huge plant-loving home decor audience.",
-        "text": "'Hang your plants. Not your worries.' or 'Green walls. Zero holes.' — light, fun, relatable to plant lovers.",
-    },
-    {
-        "name": "The Organized Life",
-        "concept": "Show a beautifully organized functional space — entryway with hooks for coats and bags, bathroom with hooks for towels, kitchen with mounted spice holders. Real utility made beautiful. The kind of organization that makes life feel calmer.",
-        "text": "'Less clutter. More calm.' or 'Everything in its place.' — peaceful, aspirational, deeply relatable.",
-    },
-]
+        return [
+            "Hang it. Love it.\nKeep your deposit.",
+            "No screws.\nNo excuses.",
+            "Your walls finally\nwork for you.",
+            "Hook it up.\nNo tools needed.",
+            "Everything in its place.\nZero damage.",
+        ]
+    else:
+        return [
+            "No nails. No limits.\nJust results.",
+            "Your home. Your rules.\nZero holes.",
+            "Stick it. Style it.\nLeave nothing behind.",
+            "5 minutes.\nZero tools. This.",
+            "Clean hold.\nEvery time.",
+        ]
 
 
 
@@ -477,38 +293,28 @@ all_image_paths = get_image_paths(product_folder)
 if not all_image_paths:
     raise ValueError(f"No images found in {product_folder}")
 
-# Pick 3 unique creative combinations for today
-angles_today = rng.sample(CREATIVE_ANGLES, 3)
-moods_today = rng.sample(VISUAL_MOODS, 3)
+# Pick 3 unique themes and copy lines for today
+themes_today = rng.sample(THEMES, 3)
 copy_lines = get_copy_lines(product)
 copies_today = rng.sample(copy_lines, min(3, len(copy_lines)))
-product_type = get_product_type_context(product)
 
-print(f"Today's angles: {', '.join(angles_today)}\n")
+print(f"Today's themes: {', '.join(t[0][:50] for t in themes_today)}\n")
 
-# Generate one image per combination
+# Generate one image per theme
 output_paths = []
 
-for i, (angle, mood, copy) in enumerate(zip(angles_today, moods_today, copies_today), 1):
-    print(f"Generating image {i}/3 — angle: '{angle}' ...")
+for i, ((angle, visual), copy) in enumerate(zip(themes_today, copies_today), 1):
+    print(f"Generating image {i}/3 — {angle[:60]} ...")
 
-    ref_image = load_pil_images([all_image_paths[(i - 1) % len(all_image_paths)]])
-    if not ref_image:
-        raise ValueError("Could not load reference image")
+    scene = get_scene_for_product(product, angle, visual)
 
-    visual_description = product.get("visual_description", product_type)
+    prompt = f"""Professional Instagram lifestyle photo. Square format.
 
-    prompt = f"""Create a premium lifestyle home photo for an Instagram post.
+SCENE: {scene}
 
-WHAT THIS PRODUCT DOES: {description}
-BEST USED FOR: {use_cases}
+THEME: {angle}
 
-CREATIVE ANGLE: "{angle}"
-VISUAL MOOD: {mood}
-
-Show a beautiful, realistic, aspirational home scene that captures this creative angle. Focus purely on the lifestyle result — a beautifully organized, styled space. Do NOT show any product, hands applying tape, or hooks on walls. Just the beautiful end result: frames perfectly hung, organized entryways, styled rooms, flat rugs, mounted shelves — whatever fits the use cases above.
-
-No people with awkward poses. No text. No logos. No brand names. No product packaging. Just a stunning, magazine-quality home scene."""
+Render this as a beautiful, realistic, magazine-quality home photo. The scene must make complete sense — every object in the frame has a reason to be there. Aspirational but achievable. No text, no logos, no brand names, no packaging anywhere in the image. No awkward AI-looking hands or poses."""
 
     contents = [prompt]
     response = generate_image(contents)
@@ -519,12 +325,7 @@ No people with awkward poses. No text. No logos. No brand names. No product pack
     for part in response.parts:
         if getattr(part, "inline_data", None) is not None:
             raw_image = part.as_image()
-            # 1. Crop to perfect square
             final_image = crop_to_square(raw_image)
-            # 2. Composite real product photo into bottom-right corner
-            product_ref = all_image_paths[(i - 1) % len(all_image_paths)]
-            final_image = composite_product(final_image, product_ref)
-            # 3. Add text overlay bottom-left
             final_image = add_text_overlay(final_image, copy)
             final_image.save(output_path)
             print(f"  Saved: {output_path.name}")
