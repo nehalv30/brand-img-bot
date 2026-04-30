@@ -9,11 +9,9 @@ reference photo as visual anchor. Retries up to 15 times total:
 """
 
 import time
-from io import BytesIO
 
 from google import genai
 from google.genai import types
-from PIL import Image
 
 from config import API_KEY
 from themes import get_scene_for_product
@@ -177,18 +175,15 @@ def build_image(
     product: dict,
     angle: str,
     visual: str,
-    ref_image: Image.Image,
+    ref_part: types.Part,
     feedback: str | None = None,
-) -> Image.Image | None:
+) -> "Image.Image | None":
     """
     Generate one lifestyle image.
-    Sends the product reference image alongside the prompt.
+    ref_part is a pre-converted Gemini Part (convert once, reuse across retries).
     Returns a PIL Image on success, None if Gemini returns no image.
     """
     prompt = _build_prompt(product, angle, visual, feedback)
-    buf = BytesIO()
-    ref_image.convert("RGB").save(buf, format="JPEG", quality=85)
-    ref_part = types.Part.from_bytes(data=buf.getvalue(), mime_type="image/jpeg")
     # Reference image first so the model sees it before reading the prompt
     contents = [ref_part, prompt]
 

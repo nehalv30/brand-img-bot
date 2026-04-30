@@ -16,7 +16,7 @@ from products import load_products, get_reference_image
 from themes import THEMES, get_copy_lines
 from builder import build_image
 from critique import critique_image
-from image_utils import crop_to_square, add_text_overlay
+from image_utils import crop_to_square, add_text_overlay, pil_to_part
 from email_sender import send_email_with_attachments
 
 # How many builder+critique rounds to allow per post before using best attempt
@@ -30,7 +30,7 @@ def generate_post(
     angle: str,
     visual: str,
     copy: str,
-    ref_image,
+    ref_part,
     post_index: int,
 ):
     """
@@ -43,7 +43,7 @@ def generate_post(
 
     for round_num in range(1, MAX_ROUNDS + 1):
         print(f"  Round {round_num}/{MAX_ROUNDS} — building image...")
-        raw = build_image(product, angle, visual, ref_image, feedback)
+        raw = build_image(product, angle, visual, ref_part, feedback)
 
         if raw is None:
             print("  Builder returned no image.")
@@ -89,6 +89,9 @@ def main():
     ref_path, ref_image = ref
     print(f"Reference image: {ref_path.name}\n")
 
+    # Convert once — reused across all 3 posts and any retries
+    ref_part = pil_to_part(ref_image)
+
     themes_today = rng.sample(THEMES, 3)
     copy_lines = get_copy_lines(product)
     copies_today = rng.sample(copy_lines, min(3, len(copy_lines)))
@@ -96,7 +99,7 @@ def main():
     output_paths = []
     for i, ((angle, visual), copy) in enumerate(zip(themes_today, copies_today), 1):
         print(f"\n=== Post {i}/3: {angle[:70]} ===")
-        path = generate_post(product, angle, visual, copy, ref_image, i)
+        path = generate_post(product, angle, visual, copy, ref_part, i)
         if path:
             output_paths.append(path)
 

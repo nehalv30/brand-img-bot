@@ -1,6 +1,15 @@
+from io import BytesIO
 from pathlib import Path
 
+from google.genai import types
 from PIL import Image, ImageDraw, ImageFont
+
+
+def pil_to_part(img: Image.Image) -> types.Part:
+    """Convert a PIL Image to a Gemini API Part (JPEG, single conversion point)."""
+    buf = BytesIO()
+    img.convert("RGB").save(buf, format="JPEG", quality=85)
+    return types.Part.from_bytes(data=buf.getvalue(), mime_type="image/jpeg")
 
 
 def get_font(size: int) -> ImageFont.FreeTypeFont:
