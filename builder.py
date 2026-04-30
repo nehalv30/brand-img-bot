@@ -9,9 +9,11 @@ reference photo as visual anchor. Retries up to 15 times total:
 """
 
 import time
+from io import BytesIO
 
 from google import genai
 from google.genai import types
+from PIL import Image
 
 from config import API_KEY
 from themes import get_scene_for_product
@@ -191,7 +193,9 @@ def build_image(
 
     for part in response.parts:
         if getattr(part, "inline_data", None) is not None:
-            return part.as_image()
+            # part.as_image() returns google.genai.types.Image (Pydantic model),
+            # not PIL — extract raw bytes and open properly
+            return Image.open(BytesIO(part.inline_data.data))
         if getattr(part, "text", None):
             print(f"  Model note: {part.text[:120]}")
 
