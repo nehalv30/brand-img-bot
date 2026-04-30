@@ -9,8 +9,10 @@ reference photo as visual anchor. Retries up to 15 times total:
 """
 
 import time
+from io import BytesIO
 
 from google import genai
+from google.genai import types
 from PIL import Image
 
 from config import API_KEY
@@ -184,8 +186,11 @@ def build_image(
     Returns a PIL Image on success, None if Gemini returns no image.
     """
     prompt = _build_prompt(product, angle, visual, feedback)
+    buf = BytesIO()
+    ref_image.convert("RGB").save(buf, format="JPEG", quality=85)
+    ref_part = types.Part.from_bytes(data=buf.getvalue(), mime_type="image/jpeg")
     # Reference image first so the model sees it before reading the prompt
-    contents = [ref_image, prompt]
+    contents = [ref_part, prompt]
 
     response = generate_with_retry(contents)
 

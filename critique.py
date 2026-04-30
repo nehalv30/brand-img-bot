@@ -6,7 +6,10 @@ Checks visual appeal, scene logic, product correctness, and professional finish.
 Returns a structured verdict so the builder can retry with targeted feedback.
 """
 
+from io import BytesIO
+
 from google import genai
+from google.genai import types
 from PIL import Image
 
 from config import API_KEY
@@ -64,9 +67,12 @@ def critique_image(
     full_prompt = f"{_SYSTEM_PROMPT}\n\n{context_note}"
 
     try:
+        buf = BytesIO()
+        img.convert("RGB").save(buf, format="JPEG", quality=85)
+        image_part = types.Part.from_bytes(data=buf.getvalue(), mime_type="image/jpeg")
         response = client.models.generate_content(
             model=_CRITIQUE_MODEL,
-            contents=[full_prompt, img],
+            contents=[full_prompt, image_part],
         )
         text = (response.text or "").strip()
     except Exception as e:
